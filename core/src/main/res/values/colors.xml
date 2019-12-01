@@ -7,6 +7,8 @@
     <color name="colorPrimaryLight">#FFFFFF</color>
     <color name="colorPrimaryDarkLight">#E4E4E4</color>
 
+    <color name="colorBackGourdLight">#FBFBFB</color>
+
     <color name="colorWhite">#ffffff</color>
     <color name="colorDarkWhite">#E4E4E4</color>
     <color name="colorDark">#464753</color>
@@ -15,6 +17,7 @@
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#8BC34A</color>
     <color name="colorBlue">#2E6FF2</color>
+    <color name="colorBlueLight">#85ADFF</color>
     <color name="colorGreenLight">#89FF00</color>
     <color name="colorYellow">#FFEB3B</color>
     <color name="colorOrange">#FF9800</color>
@@ -23,4 +26,5 @@
     <color name="colorMediumGray">#999</color>
     <color name="colorGrayLight">#DDD</color>
     <color name="colorGrayLightSuper">#F0EFEF</color>
+    <color name="colorGrayLightSuperHyper">#FDFDFD</color>
 </resources>

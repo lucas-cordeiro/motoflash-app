@@ -109,8 +109,6 @@ abstract class BaseFragment : Fragment(), MvpView {
     val TAG: String
         get() = this::class.java.simpleName
 
-    protected abstract val presenter: MvpPresenter<MvpView>
-
     companion object{
         var OPEN = false
     }

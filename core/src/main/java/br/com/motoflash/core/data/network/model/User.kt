@@ -1,6 +1,6 @@
 package br.com.motoflash.core.data.network.model
 
-import com.google.firebase.firestore.model.value.TimestampValue
+import com.google.firebase.Timestamp
 
 
 data class User(
@@ -8,7 +8,7 @@ data class User(
     var name: String? = null,
     var companyId: String? = null,
     var password: String? = null,
-    var createdDate: TimestampValue? = null,
+    var createdDate: Timestamp? = null,
     var email: String? = null,
     var mobilePhone: String? = null,
     var active: Boolean? = null

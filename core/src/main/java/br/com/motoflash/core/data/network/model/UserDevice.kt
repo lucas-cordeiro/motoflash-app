@@ -5,7 +5,7 @@ data class UserDevice(
 
     var id: String? = null,
     var userId: String? = null,
-    var platform: String? = null,
+    var platform: String = Platforms.CLIENT_ANDROID.name,
     var deviceToken: String? = null,
     var appVersion: String? = null,
     var snsEndpoint: String? = null,

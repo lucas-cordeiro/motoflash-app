@@ -1,6 +1,6 @@
 package br.com.motoflash.core.data.network.model
 
-import com.google.firebase.firestore.model.value.TimestampValue
+import com.google.firebase.Timestamp
 
 
 data class Courier(
@@ -9,7 +9,7 @@ data class Courier(
     var cnh: Boolean = false,
     var cnhDoc: String? = null,
     var cnhNumber: String? = null,
-    var createdDate: TimestampValue? = null,
+    var createdDate: Timestamp? = null,
     var currentEquipment: Equipment? = null,
     var email: String? = null,
     var location: Location? = null,
