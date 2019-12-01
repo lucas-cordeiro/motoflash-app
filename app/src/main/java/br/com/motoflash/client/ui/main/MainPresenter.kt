@@ -2,9 +2,11 @@ package br.com.motoflash.client.ui.main
 
 import br.com.motoflash.client.ui.base.BasePresenter
 import br.com.motoflash.core.data.network.model.User
+import br.com.motoflash.core.ui.util.DEVICE_ID
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import com.pixplicity.easyprefs.library.Prefs
 import java.util.*
 import javax.inject.Inject
 
@@ -23,12 +25,25 @@ constructor() : BasePresenter<V>(), MainMvpPresenter<V> {
                 }else{
                     if(doc != null && doc.exists()){
                         val userDoc = doc.toObject(User::class.java)!!
+                        userDoc.id = doc.id
+
+                        val device = getUserDevice(Prefs.getString(DEVICE_ID, ""))
+
                         if(userDoc.active == true){
-                            mvpView?.onGetUser(userDoc)
+                            firestore
+                                .collection("users")
+                                .document(user.uid)
+                                .collection("devices")
+                                .document(device.uniqueId!!)
+                                .set(device)
+                                .addOnCompleteListener {
+                                    mvpView?.onGetUser(userDoc)
+                                }
                         }
                         else{
                             logoutUser()
                         }
+
                     }else{
                         logoutUser()
                     }

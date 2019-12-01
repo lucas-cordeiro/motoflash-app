@@ -11,5 +11,6 @@ data class User(
     var createdDate: Timestamp? = null,
     var email: String? = null,
     var mobilePhone: String? = null,
+    var profilePhoto: String? = null,
     var active: Boolean? = null
 )

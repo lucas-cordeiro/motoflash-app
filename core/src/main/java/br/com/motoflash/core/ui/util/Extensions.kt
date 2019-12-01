@@ -73,7 +73,7 @@ fun View.showScale(){
         .setInterpolator(DecelerateInterpolator()).start()
 }
 
-fun View.hideAlpha(delay: Long = 1000L, startDelay: Long? = null, translate: Boolean = true){
+fun View.hideAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Boolean = false){
     if(this.alpha != 0f) {
         val animation = ViewCompat.animate(this)
             .alpha(0f)
@@ -81,6 +81,7 @@ fun View.hideAlpha(delay: Long = 1000L, startDelay: Long? = null, translate: Boo
             .setListener(object : ViewPropertyAnimatorListener {
                 override fun onAnimationEnd(view: View?) {
                     visibility = View.GONE
+                    view?.alpha = 0f
                 }
 
                 override fun onAnimationCancel(view: View?) {
@@ -102,20 +103,21 @@ fun View.hideAlpha(delay: Long = 1000L, startDelay: Long? = null, translate: Boo
     }
 }
 
-fun View.showAlpha(delay: Long = 1000L, startDelay: Long? = null, whioutMove: Boolean? = null){
+fun View.showAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Boolean = false){
     if(this.alpha != 1f) {
+        visibility = View.VISIBLE
         val animation = ViewCompat.animate(this)
             .alpha(1f)
             .setDuration(delay)
             .setListener(object : ViewPropertyAnimatorListener {
                 override fun onAnimationEnd(view: View?) {
+                    view?.alpha = 1f
                 }
 
                 override fun onAnimationCancel(view: View?) {
                 }
 
                 override fun onAnimationStart(view: View?) {
-                    visibility = View.VISIBLE
                 }
 
             })
@@ -123,11 +125,8 @@ fun View.showAlpha(delay: Long = 1000L, startDelay: Long? = null, whioutMove: Bo
         if (startDelay != null)
             animation.startDelay = startDelay
 
-        if(whioutMove==null){
+        if(translate){
             animation.translationY(50f)
-        }else{
-            if(!whioutMove)
-                animation.translationY(50f)
         }
         animation.start()
     }
@@ -141,9 +140,9 @@ fun ViewGroup.showItemsWithMove(delay: Long = 300L){
         if (v !is ImageView && v !is LinearLayout) {
             val viewAnimator: ViewPropertyAnimatorCompat
 
-            if (v !is Button) {
+            if (v is Button) {
                 viewAnimator = ViewCompat.animate(v)
-                    .translationY(50f).alpha(1f)
+                    .alpha(1f)
                     .setStartDelay(delay * i)
                     .setDuration(1000)
             } else {
@@ -163,19 +162,36 @@ fun ViewGroup.showItems(delay: Long = 300L){
 
         val v = this.getChildAt(i)
 
-        if (v !is ImageView) {
+        if (v !is ImageView && v !is ProgressBar) {
             val viewAnimator: ViewPropertyAnimatorCompat
 
-            if (v !is Button) {
+            if (v is Button) {
                 viewAnimator = ViewCompat.animate(v)
-                    .translationY(50f).alpha(1f)
-                    .setStartDelay(delay * i + 500)
-                    .setDuration(1000)
+                    .alpha(1f)
+                    .setStartDelay(delay * i )
+                    .setDuration(500)
+
+                viewAnimator.setListener(object : ViewPropertyAnimatorListener{
+                    override fun onAnimationCancel(view: View?) {}
+                    override fun onAnimationStart(view: View?) {}
+                    override fun onAnimationEnd(view: View?) {
+                        view?.alpha = 1f
+                    }
+                })
             } else {
                 viewAnimator = ViewCompat.animate(v)
                     .scaleY(1f).scaleX(1f)
-                    .setStartDelay(delay * i + 500)
-                    .setDuration(500)
+                    .setStartDelay(delay * i)
+                    .setDuration(1000)
+
+                viewAnimator.setListener(object : ViewPropertyAnimatorListener{
+                    override fun onAnimationCancel(view: View?) {}
+                    override fun onAnimationStart(view: View?) {}
+                    override fun onAnimationEnd(view: View?) {
+                        view?.scaleY = 1f
+                        view?.scaleX = 1f
+                    }
+                })
             }
 
             viewAnimator.setInterpolator(DecelerateInterpolator()).start()
@@ -184,23 +200,50 @@ fun ViewGroup.showItems(delay: Long = 300L){
 }
 
 fun ViewGroup.hideItems(delay: Long = 300L){
+    val viewMain = this
     for (i in 0 until this.childCount) {
 
         val v = this.getChildAt(i)
 
-        if (v !is ImageView) {
+        if (v !is ImageView && v !is ProgressBar) {
             val viewAnimator: ViewPropertyAnimatorCompat
 
-            if (v !is Button) {
+            if (v is Button) {
                 viewAnimator = ViewCompat.animate(v)
-                    .translationY(-50f).alpha(0f)
-                    .setStartDelay(delay * i + 500)
-                    .setDuration(1000)
+                    .alpha(0f)
+                    .setStartDelay(delay * i)
+                    .setDuration(500)
+                viewAnimator.setListener(object : ViewPropertyAnimatorListener{
+                    override fun onAnimationCancel(view: View?) {}
+                    override fun onAnimationStart(view: View?) {}
+                    override fun onAnimationEnd(view: View?) {
+                        view?.alpha = 0f
+                    }
+                })
             } else {
                 viewAnimator = ViewCompat.animate(v)
                     .scaleY(0f).scaleX(0f)
-                    .setStartDelay(delay * i + 500)
-                    .setDuration(500)
+                    .setStartDelay(delay * i)
+                    .setDuration(1000)
+
+                viewAnimator.setListener(object : ViewPropertyAnimatorListener{
+                    override fun onAnimationCancel(view: View?) {}
+                    override fun onAnimationStart(view: View?) {}
+                    override fun onAnimationEnd(view: View?) {
+                        view?.scaleY = 0f
+                        view?.scaleX = 0f
+                    }
+                })
+            }
+
+            if(i == childCount-1){
+                viewAnimator.setListener(object : ViewPropertyAnimatorListener{
+                    override fun onAnimationCancel(view: View?) {}
+                    override fun onAnimationStart(view: View?) {}
+                    override fun onAnimationEnd(view: View?) {
+                        viewMain.visibility = View.GONE
+                    }
+                })
             }
 
             viewAnimator.setInterpolator(DecelerateInterpolator()).start()

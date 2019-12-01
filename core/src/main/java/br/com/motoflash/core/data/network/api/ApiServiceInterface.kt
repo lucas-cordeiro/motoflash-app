@@ -30,6 +30,20 @@ interface ApiServiceInterface {
     fun doCreateUser(
         @Body body: JsonObject
     ) : Observable<HashMap<String,Any>>
+
+    @PUT("users/{userId}")
+    fun doUpdateUser(
+        @Header("accesstoken") accessToken: String,
+        @Path("userId") userId: String,
+        @Body body: JsonObject
+    ): Observable<HashMap<String, Any>>
+
+    @PUT("users/{userId}/password")
+    fun doUpdateUserPassword(
+        @Header("accesstoken") accessToken: String,
+        @Path("userId") userId: String,
+        @Body body: JsonObject
+    ): Observable<HashMap<String, Any>>
     //Profile End
 
     //Client End

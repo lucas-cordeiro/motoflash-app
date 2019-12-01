@@ -22,6 +22,8 @@ class MainActivity : BaseActivity(),  MainMvpView{
 
     private lateinit var user: User
 
+    private var load = false
+
     @Inject
     lateinit var presenter: MainMvpPresenter<MainMvpView>
 
@@ -68,16 +70,20 @@ class MainActivity : BaseActivity(),  MainMvpView{
         this.user = user
         hideLoading()
 
-        FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().currentUser!!.uid)
+        if(!load){
+            load = true
 
-        val fragment = HomeFragment()
-        nav_view.show(1)
-        val fragmentTransaction = supportFragmentManager.beginTransaction().replace(
-            frame.id,
-            fragment
-        )
-            .addToBackStack(fragment.getCustomTag())
-        fragmentTransaction.commit()
+            FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().currentUser!!.uid)
+
+            val fragment = HomeFragment()
+            nav_view.show(1)
+            val fragmentTransaction = supportFragmentManager.beginTransaction().replace(
+                frame.id,
+                fragment
+            )
+                .addToBackStack(fragment.getCustomTag())
+            fragmentTransaction.commit()
+        }
     }
 
     override fun onLogoutUser() {

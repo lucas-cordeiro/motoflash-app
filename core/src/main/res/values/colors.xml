@@ -7,12 +7,13 @@
     <color name="colorPrimaryLight">#FFFFFF</color>
     <color name="colorPrimaryDarkLight">#E4E4E4</color>
 
-    <color name="colorBackGourdLight">#FBFBFB</color>
+    <color name="colorBackgroundLight">#EAEAEA</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorDarkWhite">#E4E4E4</color>
     <color name="colorDark">#464753</color>
     <color name="colorBlack">#0D0D0F</color>
+    <color name="colorBlackTransparent">#BA0D0D0F</color>
     <color name="colorRedLight">#EB8E8F</color>
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#8BC34A</color>
