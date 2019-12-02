@@ -7,12 +7,14 @@ import android.view.View
 import br.com.motoflash.client.R
 import br.com.motoflash.client.ui.base.BaseActivity
 import br.com.motoflash.client.ui.base.BaseFragment
+import br.com.motoflash.client.ui.history.HistoryFragment
 import br.com.motoflash.client.ui.home.HomeFragment
 import br.com.motoflash.client.ui.profile.ProfileFragment
 import br.com.motoflash.client.ui.splash.SplashActivity
 import br.com.motoflash.core.data.network.model.User
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.firebase.ui.auth.AuthUI
+import com.google.android.libraries.places.api.Places
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,15 +41,19 @@ class MainActivity : BaseActivity(),  MainMvpView{
     override fun setUp() {
         showLoading()
 
-        nav_view.add(MeowBottomNavigation.Model(1, R.drawable.ic_home))
-        nav_view.add(MeowBottomNavigation.Model(2, R.drawable.ic_profile))
+        nav_view.add(MeowBottomNavigation.Model(1, R.drawable.ic_history))
+        nav_view.add(MeowBottomNavigation.Model(2, R.drawable.ic_home))
+        nav_view.add(MeowBottomNavigation.Model(3, R.drawable.ic_profile))
 
         nav_view.setOnClickMenuListener{
             val fragment: BaseFragment = when(it.id){
                 1 -> {
-                    HomeFragment()
+                    HistoryFragment()
                 }
                 2 -> {
+                    HomeFragment()
+                }
+                3 -> {
                     ProfileFragment()
                 }
                 else -> {
@@ -66,6 +72,31 @@ class MainActivity : BaseActivity(),  MainMvpView{
         presenter.doGetUser()
     }
 
+    fun doOpenFragment(id: Int){
+        nav_view.show(id)
+        val fragment: BaseFragment = when(id){
+            1 -> {
+                HistoryFragment()
+            }
+            2 -> {
+                HomeFragment()
+            }
+            3 -> {
+                ProfileFragment()
+            }
+            else -> {
+                ProfileFragment()
+            }
+        }
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction().replace(
+            frame.id,
+            fragment
+        )
+            .addToBackStack(fragment.getCustomTag())
+        fragmentTransaction.commit()
+    }
+
     override fun onGetUser(user: User) {
         this.user = user
         hideLoading()
@@ -73,10 +104,12 @@ class MainActivity : BaseActivity(),  MainMvpView{
         if(!load){
             load = true
 
+            Places.initialize(applicationContext, getString(R.string.google_maps_key))
+
             FirebaseMessaging.getInstance().subscribeToTopic(FirebaseAuth.getInstance().currentUser!!.uid)
 
             val fragment = HomeFragment()
-            nav_view.show(1)
+            nav_view.show(2)
             val fragmentTransaction = supportFragmentManager.beginTransaction().replace(
                 frame.id,
                 fragment

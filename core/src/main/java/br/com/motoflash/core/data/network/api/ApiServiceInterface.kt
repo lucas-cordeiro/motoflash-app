@@ -1,6 +1,8 @@
 package br.com.motoflash.core.data.network.api
 
 import br.com.motoflash.core.BuildConfig
+import br.com.motoflash.core.data.network.model.Quotation
+import br.com.motoflash.core.data.network.model.WorkOrder
 import com.google.gson.JsonObject
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import io.ktor.util.Hash
@@ -26,19 +28,19 @@ interface ApiServiceInterface {
     //Client Start
 
     //Profile Start
-    @POST("users")
+    @POST("api/users")
     fun doCreateUser(
         @Body body: JsonObject
     ) : Observable<HashMap<String,Any>>
 
-    @PUT("users/{userId}")
+    @PUT("api/users/{userId}")
     fun doUpdateUser(
         @Header("accesstoken") accessToken: String,
         @Path("userId") userId: String,
         @Body body: JsonObject
     ): Observable<HashMap<String, Any>>
 
-    @PUT("users/{userId}/password")
+    @PUT("api/users/{userId}/password")
     fun doUpdateUserPassword(
         @Header("accesstoken") accessToken: String,
         @Path("userId") userId: String,
@@ -46,12 +48,34 @@ interface ApiServiceInterface {
     ): Observable<HashMap<String, Any>>
     //Profile End
 
+    //Quotation Start
+    @POST("api/quotation")
+    fun doCreateQuotation(
+        @Header("accesstoken") accessToken: String,
+        @Body body: JsonObject
+    ): Observable<HashMap<String,Quotation>>
+    //Quotation End
+
+    //WorkOrder Start
+    @POST("api/workorders")
+    fun doCreateWorkOrder(
+        @Header("accesstoken") accessToken: String,
+        @Body body: JsonObject
+    ): Observable<HashMap<String, String>>
+
+    @POST("RunQueue/{workOrderId}")
+    fun doRunQueue(
+        @Header("accesstoken") accessToken: String,
+        @Path("workOrderId") workOrderId: String
+    ): Observable<HashMap<String, WorkOrder>>
+    //WorkOrder End
+
     //Client End
 
     //Courier Start
 
     //Profile Start
-    @POST("couriers")
+    @POST("api/couriers")
     fun doCreateCourier(
         @Body body: JsonObject
     ) : Observable<HashMap<String, Any>>

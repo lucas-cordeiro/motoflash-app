@@ -312,7 +312,7 @@ fun WorkOrder.Status.toLabel() : String {
         WorkOrder.Status.EXECUTION -> {
             return  "Em execução"
         }
-        WorkOrder.Status.CANCELED -> {
+        WorkOrder.Status.CANCELLED -> {
             return  "Cancelado"
         }
         WorkOrder.Status.FINISHED -> {
@@ -335,7 +335,7 @@ fun WorkOrder.Status.getLabel(context: Context) : String {
         WorkOrder.Status.EXECUTION -> {
             return  context.getString(R.string.labelExecution)
         }
-        WorkOrder.Status.CANCELED -> {
+        WorkOrder.Status.CANCELLED -> {
             return  context.getString(R.string.labelCanceled)
         }
         WorkOrder.Status.FINISHED -> {
@@ -358,7 +358,7 @@ fun WorkOrder.Status.getText(context: Context) : String {
         WorkOrder.Status.EXECUTION -> {
             return  context.getString(R.string.textExecution)
         }
-        WorkOrder.Status.CANCELED -> {
+        WorkOrder.Status.CANCELLED -> {
             return  context.getString(R.string.textCanceled)
         }
         WorkOrder.Status.FINISHED -> {
@@ -366,6 +366,29 @@ fun WorkOrder.Status.getText(context: Context) : String {
         }
         WorkOrder.Status.ALL -> {
             return "All"
+        }
+    }
+}
+
+fun WorkOrder.Status.getColor(context: Context) : Int {
+    when(this){
+        WorkOrder.Status.PENDING -> {
+            return  R.color.colorOrange
+        }
+        WorkOrder.Status.ASSIGNED -> {
+            return  R.color.colorYellow
+        }
+        WorkOrder.Status.EXECUTION -> {
+            return  R.color.colorGreen
+        }
+        WorkOrder.Status.CANCELLED -> {
+            return  R.color.colorRed
+        }
+        WorkOrder.Status.FINISHED -> {
+            return  R.color.colorGrayLightSuper
+        }
+        WorkOrder.Status.ALL -> {
+            return  R.color.colorYellow
         }
     }
 }

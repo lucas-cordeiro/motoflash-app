@@ -205,7 +205,7 @@ class CommonsUtil {
                 WorkOrder.Status.EXECUTION -> {
                     return R.color.colorGreen
                 }
-                WorkOrder.Status.CANCELED -> {
+                WorkOrder.Status.CANCELLED -> {
                     return R.color.colorRed
                 }
                 WorkOrder.Status.FINISHED -> {

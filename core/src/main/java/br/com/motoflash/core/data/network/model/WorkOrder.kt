@@ -1,5 +1,7 @@
 package br.com.motoflash.core.data.network.model
 
+import com.google.firebase.Timestamp
+
 
 data class WorkOrder(
     var id: String? = null,
@@ -23,10 +25,10 @@ data class WorkOrder(
     var points: List<WorkOrderPoint>? = null,
     var modifiedDate: Long? = null,
     var bonus: Double? = null,
-    var createdDate: Long? = null
+    var createdDate: Timestamp? = null
 ) {
     enum class Status {
-        PENDING, ASSIGNED, EXECUTION, CANCELED, FINISHED, ALL
+        PENDING, ASSIGNED, EXECUTION, CANCELLED, FINISHED, ALL
     }
 
     enum class Priority {

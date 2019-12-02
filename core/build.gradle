@@ -31,11 +31,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"https://dev-api-moto-flash.firebaseapp.com\"")
+            buildConfigField("String", "BASE_URL", "\"https://us-central1-motoflash-a2f12.cloudfunctions.net\"")
         }
         debug {
             debuggable true
-            buildConfigField("String", "BASE_URL", "\"https://dev-api-moto-flash.firebaseapp.com\"")
+            buildConfigField("String", "BASE_URL", "\"https://us-central1-motoflash-a2f12.cloudfunctions.net\"")
         }
     }
 
@@ -165,6 +165,9 @@ dependencies {
 
     //MapUtils
     api 'com.google.maps.android:android-maps-utils:0.5+'
+
+    //GeoHash
+    api 'com.github.drfonfon:android-kotlin-geohash:1.0'
 
     //Algolia
     api "com.algolia:algoliasearch-client-kotlin-jvm:$kotlin_client_version"

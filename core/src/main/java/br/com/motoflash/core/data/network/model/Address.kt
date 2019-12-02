@@ -7,5 +7,15 @@ data class Address(
     var location: Location? = null,
     var neighborhood: String? = null,
     var number: String? = null,
+    var zipCode: String? = null,
     var state: String? = null
-)
+){
+    companion object{
+        const val NUMBER = "street_number"
+        const val STREET = "route"
+        const val NEIGHBORHOOD = "sublocality_level_1"
+        const val CITY = "administrative_area_level_2"
+        const val STATE = "administrative_area_level_1"
+        const val POSTAL_CODE = "postal_code"
+    }
+}
