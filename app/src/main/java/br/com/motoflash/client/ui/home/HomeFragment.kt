@@ -228,7 +228,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 WorkOrderPoint(
                     address = address,
                     id = UUID.randomUUID().toString(),
-                    sequence = list.size.toLong()
+                    sequence = list.size.toLong() + 1
             ))
         }
         adapter.notifyDataSetChanged()
@@ -417,6 +417,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         iconFactory.setColor(ContextCompat.getColor(context!!, R.color.colorWhite))
         iconFactory.setTextAppearance(R.style.BlueText)
 
+        clearMarkers()
+
         if(list.filter { it.address != null }.isEmpty()){
             val marker = MarkerOptions()
             marker.position(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude))
@@ -475,7 +477,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun onCreateWorkOrder(workOrder: WorkOrder) {
         hideLoading()
         if(workOrder.status != WorkOrder.Status.ASSIGNED.name){
-            "Não foi possível encontrar um entregador para seu pedido".showSnack(container, backgroundColor = R.color.colorRed)
+            (activity!! as MainActivity).doOpenFragment(1)
+            "Seu pedido foi criado, mas não foi possível encontrar um entregador.".showSnack(container, backgroundColor = R.color.colorRed)
         }else{
             (activity!! as MainActivity).doOpenFragment(1)
         }

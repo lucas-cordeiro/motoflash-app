@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import br.com.motoflash.client.R
 import br.com.motoflash.client.ui.base.BaseFragment
+import br.com.motoflash.client.ui.detail.WorkOrderDetailActivity
 import br.com.motoflash.client.ui.main.MainActivity
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.ui.adapter.WorkOrderAdapter
@@ -29,7 +30,7 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
         list = list,
         callback = object: WorkOrderAdapter.OnWorkOrderCallback{
             override fun onWorkOrderClick(workOrder: WorkOrder) {
-
+                startActivity(WorkOrderDetailActivity.start(context!!,workOrderId = workOrder.id!!))
             }
 
             override fun onWorkOrderLongClick(workOrder: WorkOrder) {
@@ -51,7 +52,6 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentComponent.inject(this)
-        presenter.onAttach(this)
 
         setUp()
     }
@@ -63,6 +63,7 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
 
     override fun onStart() {
         super.onStart()
+        presenter.onAttach(this)
         presenter.doGetWorkOrders((activity!! as MainActivity).getCurrentUser().id!!)
     }
 

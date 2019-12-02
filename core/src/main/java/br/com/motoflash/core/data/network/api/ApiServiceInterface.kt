@@ -67,7 +67,7 @@ interface ApiServiceInterface {
     fun doRunQueue(
         @Header("accesstoken") accessToken: String,
         @Path("workOrderId") workOrderId: String
-    ): Observable<HashMap<String, WorkOrder>>
+    ): Observable<WorkOrder>
     //WorkOrder End
 
     //Client End

@@ -14,10 +14,12 @@ class HistoryPresenter<V :HistoryMvpView> @Inject
 constructor() : BasePresenter<V>(), HistoryMvpPresenter<V> {
     private var removeListenerRegistration: ListenerRegistration? = null
     override fun doGetWorkOrders(userId: String) {
-        removeListenerRegistration = firestore.collection("workorders").whereEqualTo("userId",userId).addSnapshotListener { querySnapshot, e ->
+    removeListenerRegistration = firestore.collection("workorders").orderBy("createdDate", Query.Direction.DESCENDING).whereEqualTo("userId",userId).addSnapshotListener { querySnapshot, e ->
             if(e==null){
                 log("success")
-                mvpView?.onGetWorkOrders(querySnapshot?.toObjects(WorkOrder::class.java)?:ArrayList())
+                mvpView?.onGetWorkOrders(querySnapshot!!.documents.map { it.toObject(WorkOrder::class.java)!!.apply {
+                    id = it.id
+                } })
             }else{
                 log("Error: ${e.message}")
             }

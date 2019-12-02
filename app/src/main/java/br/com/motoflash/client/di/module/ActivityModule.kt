@@ -3,6 +3,9 @@ package br.com.motoflash.client.di.module
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import br.com.motoflash.client.di.annotations.ActivityContext
+import br.com.motoflash.client.ui.detail.WorkOrderDetailMvpPresenter
+import br.com.motoflash.client.ui.detail.WorkOrderDetailMvpView
+import br.com.motoflash.client.ui.detail.WorkOrderDetailPresenter
 import br.com.motoflash.client.ui.login.LoginMvpPresenter
 import br.com.motoflash.client.ui.login.LoginMvpView
 import br.com.motoflash.client.ui.login.LoginPresenter
@@ -40,5 +43,9 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     internal fun providLoginMvpPresenter(presenter: LoginPresenter<LoginMvpView>): LoginMvpPresenter<LoginMvpView> =
+        presenter
+
+    @Provides
+    internal fun providWorkOrderDetailMvpPresenter(presenter: WorkOrderDetailPresenter<WorkOrderDetailMvpView>): WorkOrderDetailMvpPresenter<WorkOrderDetailMvpView> =
         presenter
 }

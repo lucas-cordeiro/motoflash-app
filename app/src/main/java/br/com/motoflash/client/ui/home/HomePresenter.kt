@@ -63,7 +63,7 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
                 ).compose(RxUtil.applyNetworkSchedulers())
             }
             .subscribe({
-                mvpView?.onCreateWorkOrder(it["workOrder"]!!)
+                mvpView?.onCreateWorkOrder(it)
             },{
                 log("Error: ${it.message}")
                 if(it is HttpException){
