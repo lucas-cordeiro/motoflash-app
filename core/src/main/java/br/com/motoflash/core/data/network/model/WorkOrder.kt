@@ -6,6 +6,7 @@ import com.google.firebase.Timestamp
 data class WorkOrder(
     var id: String? = null,
     var near: Boolean? = null,
+    var motorcycle: Boolean? = null,
     var shortHash: String? = null,
     var userId: String? = null,
     var priority: String? = null,

@@ -61,7 +61,7 @@ interface ApiServiceInterface {
     fun doCreateWorkOrder(
         @Header("accesstoken") accessToken: String,
         @Body body: JsonObject
-    ): Observable<HashMap<String, String>>
+    ): Observable<HashMap<String, WorkOrder>>
 
     @POST("RunQueue/{workOrderId}")
     fun doRunQueue(

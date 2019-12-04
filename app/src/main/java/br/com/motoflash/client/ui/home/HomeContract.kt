@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 
 interface HomeMvpPresenter<V :HomeMvpView> : MvpPresenter<V> {
     fun doGetQuotation(points: List<WorkOrderPoint>, companyId: String)
-    fun doCreateWorkOrder(userId: String, points: List<WorkOrderPoint>, quotation: Quotation)
+    fun doCreateWorkOrder(userId: String, points: List<WorkOrderPoint>, quotation: Quotation, motorcycle: Boolean)
 }
 
 interface HomeMvpView : MvpView {

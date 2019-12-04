@@ -363,11 +363,23 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 presenter.doCreateWorkOrder(
                     userId = (activity!! as MainActivity).getCurrentUser().id!!,
                     points = list,
-                    quotation = currentQuotation!!
+                    quotation = currentQuotation!!,
+                    motorcycle = btnMotorcycle.isChecked
                 )
             }else{
                 "Você precisa ter feito um orçamento com pelo menos 2 pontos".showSnack(container, backgroundColor = R.color.colorRed)
             }
+        }
+
+        btnMotorcycle.setOnClickListener {
+            if(btnMotorcycle.isChecked){
+                btnMotorcycle.text = "Motoboy"
+                btnMotorcycle.setTextColor(ContextCompat.getColor(context!!, R.color.colorBlue))
+            }else{
+                btnMotorcycle.text = "Bike"
+                btnMotorcycle.setTextColor(ContextCompat.getColor(context!!, R.color.colorGray))
+            }
+
         }
     }
 

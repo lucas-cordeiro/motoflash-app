@@ -40,12 +40,14 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
     override fun doCreateWorkOrder(
         userId: String,
         points: List<WorkOrderPoint>,
-        quotation: Quotation
+        quotation: Quotation,
+        motorcycle: Boolean
     ) {
         val body = HashMap<String, Any>()
         body["workOrder"] = WorkOrder(
             quotation = quotation,
             points = points,
+            motorcycle = motorcycle,
             userId = userId
         )
 
@@ -59,7 +61,7 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
                 mvpView?.onSearchCourier()
                 api.doRunQueue(
                     accessToken = currentTokenId,
-                    workOrderId = it["workOrderId"]!!
+                    workOrderId = it["workOrder"]!!.id!!
                 ).compose(RxUtil.applyNetworkSchedulers())
             }
             .subscribe({
