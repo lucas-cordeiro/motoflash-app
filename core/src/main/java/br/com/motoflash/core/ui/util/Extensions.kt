@@ -51,6 +51,8 @@ fun View.hideScale(){
         .setDuration(500)
         .setListener(object : ViewPropertyAnimatorListener {
             override fun onAnimationEnd(view: View?) {
+                view?.scaleY = 0f
+                view?.scaleX = 0f
                 this@hideScale.visibility = View.GONE
             }
 
@@ -70,11 +72,25 @@ fun View.showScale(){
     ViewCompat.animate(this)
         .scaleY(1f).scaleX(1f)
         .setDuration(500)
+        .setListener(object : ViewPropertyAnimatorListener {
+            override fun onAnimationEnd(view: View?) {
+                visibility = View.VISIBLE
+                view?.scaleY = 1f
+                view?.scaleX = 1f
+            }
+
+            override fun onAnimationCancel(view: View?) {
+            }
+
+            override fun onAnimationStart(view: View?) {
+            }
+
+        })
+        .setInterpolator(DecelerateInterpolator())
         .setInterpolator(DecelerateInterpolator()).start()
 }
 
 fun View.hideAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Boolean = false){
-    if(this.alpha != 0f) {
         val animation = ViewCompat.animate(this)
             .alpha(0f)
             .setDuration(delay)
@@ -100,17 +116,17 @@ fun View.hideAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Bool
             animation.translationY(-50f)
 
         animation.start()
-    }
+
 }
 
 fun View.showAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Boolean = false){
-    if(this.alpha != 1f) {
         visibility = View.VISIBLE
         val animation = ViewCompat.animate(this)
             .alpha(1f)
             .setDuration(delay)
             .setListener(object : ViewPropertyAnimatorListener {
                 override fun onAnimationEnd(view: View?) {
+                    visibility = View.VISIBLE
                     view?.alpha = 1f
                 }
 
@@ -129,7 +145,6 @@ fun View.showAlpha(delay: Long = 500L, startDelay: Long? = null, translate: Bool
             animation.translationY(50f)
         }
         animation.start()
-    }
 }
 
 fun ViewGroup.showItemsWithMove(delay: Long = 300L){
@@ -140,7 +155,7 @@ fun ViewGroup.showItemsWithMove(delay: Long = 300L){
         if (v !is ImageView && v !is LinearLayout) {
             val viewAnimator: ViewPropertyAnimatorCompat
 
-            if (v is Button) {
+            if (v !is Button) {
                 viewAnimator = ViewCompat.animate(v)
                     .alpha(1f)
                     .setStartDelay(delay * i)
