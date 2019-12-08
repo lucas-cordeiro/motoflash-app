@@ -194,4 +194,8 @@ dependencies {
     api 'io.requery:requery-kotlin:1.6.1'
     api 'io.requery:requery-android:1.6.1'
     kapt 'io.requery:requery-processor:1.6.1'
+
+    //Anko
+    api "org.jetbrains.anko:anko:0.10.8"
+    api "org.jetbrains.anko:anko-commons:0.10.8"
 }

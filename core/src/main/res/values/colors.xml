@@ -18,6 +18,7 @@
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#8BC34A</color>
     <color name="colorBlue">#2E6FF2</color>
+    <color name="colorBlueDark">#0655F5</color>
     <color name="colorBlueLight">#85ADFF</color>
     <color name="colorGreenLight">#89FF00</color>
     <color name="colorYellow">#FFEB3B</color>
@@ -28,4 +29,11 @@
     <color name="colorGrayLight">#DDD</color>
     <color name="colorGrayLightSuper">#F0EFEF</color>
     <color name="colorGrayLightSuperHyper">#FDFDFD</color>
+
+    <!--Font-->
+    <color name="colorFontTitle">#464753</color>
+    <color name="colorFontTitleLight">#636369</color>
+    <color name="colorFontTitleSuperLight">#90909B</color>
+    <color name="colorFontTitleHint">#FDFDFF</color>
+    <color name="colorFontTitleAccent">#03A9F4</color>
 </resources>

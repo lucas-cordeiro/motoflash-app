@@ -7,8 +7,10 @@ data class WorkOrder(
     var id: String? = null,
     var near: Boolean? = null,
     var motorcycle: Boolean? = null,
+    var payment: Payment? = null,
     var shortHash: String? = null,
     var userId: String? = null,
+    var couriers: List<Courier>? = null,
     var priority: String? = null,
     var trackingCode: String? = null,
     var price: Double? = null,
@@ -30,6 +32,10 @@ data class WorkOrder(
 ) {
     enum class Status {
         PENDING, ASSIGNED, EXECUTION, CANCELLED, FINISHED, ALL
+    }
+
+    enum class Action {
+        START, START_POINT, FINISH_POINT
     }
 
     enum class Priority {

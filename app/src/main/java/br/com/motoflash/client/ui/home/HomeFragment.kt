@@ -73,6 +73,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     private var currentQuotation: Quotation? = null
 
+    private var workOrderId: String? = null
+
     val placesClient by lazy{
         Places.createClient(context!!)
     }
@@ -123,6 +125,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == AUTOCOMPLETE_REQUEST_CODE && data != null){
+            log("autocomplete")
 
             var hasNumber = false
 
@@ -133,7 +136,10 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 }
             }
 
+            log("before !hasNumber")
+
             if(!hasNumber){
+                log("!hasNumber")
                 val dialog = InputTextDialog(
                     title = "Endereço",
                     label = "Informe um número para esse endereço: ",
@@ -173,12 +179,14 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
                 dialog.show(fragmentManager, "Endereço")
             }else{
+                log("hasNumber")
                 updateWorkOrderPoint(Autocomplete.getPlaceFromIntent(data))
             }
         }
     }
 
     private fun updateWorkOrderPoint(place:Place){
+        log("updateWorkOrderPoint")
         val address = Address().apply {
             //                                    name = text
             for (item in place.addressComponents?.asList()!!) {
@@ -215,6 +223,9 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 place.latLng!!.longitude).toString()
         )
 
+        list.forEach {
+            log("item before:${it.address?.address1?:"address"}, ${it.id}, ${it.sequence}")
+        }
 
         if(currentWorkOrderPointId!=null){
             val index = list.indexOfFirst { it.id == currentWorkOrderPointId }
@@ -223,14 +234,19 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                 sequence = index + 1L,
                 id = currentWorkOrderPointId
             )
+            currentWorkOrderPointId = null
         }else{
             list.add(
                 WorkOrderPoint(
                     address = address,
                     id = UUID.randomUUID().toString(),
-                    sequence = list.size.toLong() + 1
+                    sequence = (list[list.size - 1].sequence?:0) + 1
             ))
         }
+        list.forEach {
+            log("item:${it.address?.address1?:"address"}, ${it.id}, ${it.sequence}")
+        }
+
         adapter.notifyDataSetChanged()
         currentQuotation = null
         txtPrice.visibility = View.GONE
@@ -381,6 +397,12 @@ class HomeFragment : BaseFragment(), HomeMvpView {
             }
 
         }
+
+        btnCancell.setOnClickListener {
+            if(workOrderId!=null){
+                presenter.doCancellWorkOrder(workOrderId!!)
+            }
+        }
     }
 
     private fun loadLocation() {
@@ -431,7 +453,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
         clearMarkers()
 
-        if(list.filter { it.address != null }.isEmpty()){
+        if(list.filter { it.address != null }.isEmpty() && mLastLocation!=null){
             val marker = MarkerOptions()
             marker.position(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude))
             val cameraPosition = CameraPosition.Builder().target(marker.position).zoom(16f).build()
@@ -486,18 +508,25 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         hideLoading()
     }
 
-    override fun onCreateWorkOrder(workOrder: WorkOrder) {
+    override fun onCreateWorkOrder() {
         hideLoading()
-        if(workOrder.status != WorkOrder.Status.ASSIGNED.name){
+        "Seu pedido foi criado".showSnack(container, backgroundColor = R.color.colorBlue)
             (activity!! as MainActivity).doOpenFragment(1)
-            "Seu pedido foi criado, mas não foi possível encontrar um entregador.".showSnack(container, backgroundColor = R.color.colorRed)
-        }else{
-            (activity!! as MainActivity).doOpenFragment(1)
-        }
     }
 
-    override fun onSearchCourier() {
+    override fun onSearchCourier(workOrderId: String) {
+        this.workOrderId = workOrderId
         "Procurando um entregador...".showSnack(container, backgroundColor = R.color.colorBlue)
+        btnCancell.visibility = View.VISIBLE
+    }
+
+    override fun onCancellWorkOrder() {
+        (activity!! as MainActivity).doOpenFragment(1)
+        "Seu pedido foi cancelado".showSnack(container, backgroundColor = R.color.colorRed)
+    }
+
+    override fun onCancellWorkOrderFail() {
+        "Não foi possível cancelar o pedido".showSnack(container, backgroundColor = R.color.colorRed)
     }
 
     override fun onNotFoundCourier() {

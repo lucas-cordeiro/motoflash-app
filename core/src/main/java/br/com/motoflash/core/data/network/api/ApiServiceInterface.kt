@@ -63,11 +63,17 @@ interface ApiServiceInterface {
         @Body body: JsonObject
     ): Observable<HashMap<String, WorkOrder>>
 
+    @PUT("api/workorders/{workOrderId}/cancell")
+    fun doCancellWorkOrder(
+        @Header("accesstoken") accessToken: String,
+        @Path("workOrderId") workOrderId: String
+    ):Observable<HashMap<String,Any>>
+
     @POST("RunQueue/{workOrderId}")
     fun doRunQueue(
         @Header("accesstoken") accessToken: String,
         @Path("workOrderId") workOrderId: String
-    ): Observable<WorkOrder>
+    ): Observable<HashMap<String, Any>>
     //WorkOrder End
 
     //Client End
@@ -79,7 +85,33 @@ interface ApiServiceInterface {
     fun doCreateCourier(
         @Body body: JsonObject
     ) : Observable<HashMap<String, Any>>
+
+    @PUT("api/couriers/{courierId}/online")
+    fun doCourierOnline(
+        @Header("accesstoken") accessToken: String,
+        @Path("courierId") courierId: String,
+        @Body body: JsonObject
+    ) : Observable<HashMap<String, Any>>
+
     //Profile End
+
+    //WorkOrder Start
+
+    @PUT("api/workorders/{workOrderId}/courier/{courierId}")
+    fun doAssingCourier(
+        @Header("accesstoken") accessToken: String,
+        @Path("courierId") courierId: String,
+        @Path("workOrderId") workOrderId: String
+    ):Observable<HashMap<String,Any>>
+
+    @PUT("api/workorders/{workOrderId}/courier/{courierId}/denie")
+    fun doDeniedCourier(
+        @Header("accesstoken") accessToken: String,
+        @Path("courierId") courierId: String,
+        @Path("workOrderId") workOrderId: String
+    ):Observable<HashMap<String,Any>>
+
+    //WorkOrder End
 
     //Courier End
 

@@ -8,6 +8,7 @@ data class Courier(
     var name: String? = null,
     var active: Boolean = false,
     var birthdate: Long? = null,
+    var sendPushDate: Long? = null,
     var cnh: Boolean = false,
     var cnhDoc: String? = null,
     var cnhNumber: String? = null,
@@ -17,6 +18,7 @@ data class Courier(
     var email: String? = null,
     var location: Location? = null,
     var mobilePhone: String? = null,
+    var profilePhoto: String? = null,
     var online: Boolean = false,
     var password: String? = null,
     var running: Boolean = false

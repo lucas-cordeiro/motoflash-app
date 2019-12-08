@@ -1,11 +1,16 @@
 package br.com.motoflash.courier.ui.main
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import br.com.motoflash.core.data.network.model.Courier
+import br.com.motoflash.core.ui.util.COURIER_ID
+import br.com.motoflash.core.ui.util.COURIER_ONLINE
 import br.com.motoflash.courier.R
+import br.com.motoflash.courier.service.location.LocationService
 import br.com.motoflash.courier.ui.base.BaseActivity
 import br.com.motoflash.courier.ui.base.BaseFragment
 import br.com.motoflash.courier.ui.history.HistoryFragment
@@ -17,17 +22,21 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.libraries.places.api.Places
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
+import com.pixplicity.easyprefs.library.Prefs
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainMvpView {
 
-    private lateinit var courier: Courier
-
-    private var load = false
+    private var courierCallback: OnCourierCallback? = null
 
     @Inject
     lateinit var presenter: MainMvpPresenter<MainMvpView>
+
+    private lateinit var courier: Courier
+
+    private var load = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +47,26 @@ class MainActivity : BaseActivity(), MainMvpView {
         setUp()
     }
 
+    @SuppressLint("CheckResult")
     override fun setUp() {
+        Prefs.putString(COURIER_ID, FirebaseAuth.getInstance().uid)
         showLoading()
+
+        RxPermissions(this)
+            .request(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            .subscribe { granted ->
+                if(granted){
+
+                }else{
+                    finish()
+                }
+            }
 
         nav_view.add(MeowBottomNavigation.Model(1, R.drawable.ic_history))
         nav_view.add(MeowBottomNavigation.Model(2, R.drawable.ic_home))
@@ -74,7 +101,20 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     override fun onGetCourier(courier: Courier) {
         this.courier = courier
-        if(load){
+
+        hideLoading()
+
+        if(courier.online){
+            LocationService.startLocationServices(this)
+            Prefs.putBoolean(COURIER_ONLINE, true)
+        }
+        else{
+            LocationService.stopLocationServices(this)
+            Prefs.putBoolean(COURIER_ONLINE, false)
+        }
+
+
+        if(!load){
             load = true
 
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
@@ -89,13 +129,27 @@ class MainActivity : BaseActivity(), MainMvpView {
             )
                 .addToBackStack(fragment.getCustomTag())
             fragmentTransaction.commit()
+
         }
+        courierCallback?.onGetCourier(courier)
+    }
+
+    fun setCallback(courierCallback: OnCourierCallback){
+        this.courierCallback = courierCallback
+    }
+
+    fun removeCallback(){
+        courierCallback = null
+    }
+
+    fun doGetCourier() : Courier{
+        return courier
     }
 
     override fun onLogoutCourier() {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(FirebaseAuth.getInstance().currentUser!!.uid)
         AuthUI.getInstance().signOut(this).addOnCompleteListener {
-            showMessage("Usuário Desconectado!")
+            showToast("Usuário Bloqueado!")
             FirebaseAuth.getInstance().signOut()
             finish()
         }
@@ -112,5 +166,9 @@ class MainActivity : BaseActivity(), MainMvpView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDetach()
+    }
+
+    interface OnCourierCallback {
+        fun onGetCourier(courier: Courier)
     }
 }

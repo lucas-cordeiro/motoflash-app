@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import br.com.motoflash.core.ui.util.CommonsUtil
 import br.com.motoflash.courier.di.component.DaggerActivityComponent
 import br.com.motoflash.core.ui.util.showSnack
 import br.com.motoflash.courier.BaseApp
@@ -58,6 +59,14 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
 
     protected fun showSnackError(message: String) {
         message.showSnack(findViewById(R.id.container), backgroundColor = R.color.colorRed)
+    }
+
+    fun showToast(message: String){
+        CommonsUtil.showCustomTost(
+            context = this,
+            message = message,
+            success = false
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

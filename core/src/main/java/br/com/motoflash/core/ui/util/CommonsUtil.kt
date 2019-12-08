@@ -3,6 +3,10 @@ package br.com.motoflash.core.ui.util
 import android.content.Context
 import android.graphics.*
 import android.util.TypedValue
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.atan2
@@ -15,6 +19,7 @@ import androidx.core.content.ContextCompat
 import br.com.motoflash.core.R
 import br.com.motoflash.core.data.network.model.WorkOrder
 import com.google.android.gms.maps.model.LatLng
+import org.jetbrains.anko.layoutInflater
 
 
 class CommonsUtil {
@@ -305,6 +310,29 @@ class CommonsUtil {
             canvas.drawText(text, getPx(context, 10f), -getPx(context, 10f), textPaint)
             return BitmapDescriptorFactory.fromBitmap(image)
         }
-    }
 
+        fun showCustomTost(context: Context, message: String, success: Boolean) {
+            val inflater = context.layoutInflater
+            val layout = inflater.inflate(R.layout.custom_toast_result, null)
+
+            val image = layout.findViewById(R.id.toastCustomImage) as ImageView
+            val drawable = ContextCompat.getDrawable(context, if (false) R.drawable.ic_success else R.drawable.ic_error)!!
+//            val wrappedDrawable = DrawableCompat.wrap(drawable)
+//            DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context, if (success) R.color.gray else R.color.blue))
+            image.setImageDrawable(drawable)
+
+            val cardView = layout.findViewById(R.id.toastCustomLayout) as CardView
+//            cardView.setCardBackgroundColor(ContextCompat.getColor(context, if (success) R.color.gray else R.color.blue))
+
+            val text = layout.findViewById(R.id.toastCustomText) as TextView
+            text.text = message
+//            text.setTextColor(ContextCompat.getColor(context, if (success) R.color.gray else R.color.blue))
+
+            val toast = Toast(context)
+            /*toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)*/
+            toast.duration = if(success) Toast.LENGTH_SHORT else Toast.LENGTH_LONG
+            toast.view = layout
+            toast.show()
+        }
+    }
 }

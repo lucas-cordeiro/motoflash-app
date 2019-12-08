@@ -1,5 +1,6 @@
 package br.com.motoflash.courier.ui.main
 
+import android.util.Log
 import br.com.motoflash.core.data.network.model.Courier
 import br.com.motoflash.core.ui.util.DEVICE_ID
 import br.com.motoflash.courier.ui.base.BasePresenter
@@ -22,11 +23,13 @@ constructor() : BasePresenter<V>(), MainMvpPresenter<V> {
                         val userDoc = doc.toObject(Courier::class.java)!!
                         userDoc.id = doc.id
 
+                        Log.d("ProfileFragment", "update snap")
+
                         val device = getUserDevice(Prefs.getString(DEVICE_ID, ""))
 
                         if(userDoc.active){
                             firestore
-                                .collection("users")
+                                .collection("couriers")
                                 .document(user.uid)
                                 .collection("devices")
                                 .document(device.uniqueId!!)
@@ -36,10 +39,12 @@ constructor() : BasePresenter<V>(), MainMvpPresenter<V> {
                                 }
                         }
                         else{
+                            log("userDoc.active")
                             logoutUser()
                         }
 
                     }else{
+                        log("doc != null && doc.exists()")
                         logoutUser()
                     }
                 }

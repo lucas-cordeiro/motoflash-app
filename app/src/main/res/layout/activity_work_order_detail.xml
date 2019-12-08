@@ -60,10 +60,87 @@
                     android:layout_marginStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="PENDENTE"
+                    android:text="Carregando..."
                     android:textStyle="bold"
                     android:textSize="14sp"
                     android:layout_gravity="end"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerCourier"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="20dp"
+                        app:layout_constraintEnd_toEndOf="@+id/ringRelevance"
+                        app:layout_constraintBottom_toBottomOf="@+id/ringRelevance"
+                        app:layout_constraintStart_toStartOf="@+id/ringRelevance"
+                        app:layout_constraintTop_toTopOf="@+id/ringRelevance"/>
+
+                    <com.timqi.sectorprogressview.ColorfulRingProgressView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/ringRelevance"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        app:bgColor="#e1e1e1"
+                        app:fgColorEnd="@color/colorBlue"
+                        app:fgColorStart="@color/colorBlueDark"
+                        app:percent="70"
+                        app:startAngle="180"
+                        app:strokeWidth="14dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Luiz"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/colorFontTitle"
+                    android:layout_marginStart="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:tint="@color/colorBlue"
+                        app:srcCompat="@drawable/ic_cell"/>
+                    <TextView
+                        android:id="@+id/txtMobilePhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="+5512991235230"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textColor="@color/colorFontTitle"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
 
             </LinearLayout>
 

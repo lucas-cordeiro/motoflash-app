@@ -41,10 +41,12 @@ constructor() : BasePresenter<V>(), MainMvpPresenter<V> {
                                 }
                         }
                         else{
+                            log("userDoc.active == true")
                             logoutUser()
                         }
 
                     }else{
+                        log("doc != null && doc.exists()")
                         logoutUser()
                     }
                 }

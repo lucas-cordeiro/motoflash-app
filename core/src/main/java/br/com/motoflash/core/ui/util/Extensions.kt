@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.ViewPropertyAnimatorCompat
 import androidx.core.view.ViewPropertyAnimatorListener
 import br.com.motoflash.core.R
+import br.com.motoflash.core.data.network.model.Payment
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.data.network.model.WorkOrderPoint
 import com.google.android.material.snackbar.Snackbar
@@ -404,6 +405,34 @@ fun WorkOrder.Status.getColor(context: Context) : Int {
         }
         WorkOrder.Status.ALL -> {
             return  R.color.colorYellow
+        }
+    }
+}
+
+fun Payment.Status.getColor(context: Context) : Int {
+    when(this){
+        Payment.Status.PENDING -> {
+            return  R.color.colorYellow
+        }
+        Payment.Status.PAY -> {
+            return  R.color.colorGreen
+        }
+        Payment.Status.CANCELLED -> {
+            return  R.color.colorRed
+        }
+    }
+}
+
+fun Payment.Status.toLabel() : String {
+    when(this){
+        Payment.Status.PENDING -> {
+            return  "Pendente"
+        }
+        Payment.Status.PAY -> {
+            return  "Pago"
+        }
+        Payment.Status.CANCELLED -> {
+            return  "Cancelado"
         }
     }
 }

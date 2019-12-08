@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.motoflash.core.R
+import br.com.motoflash.core.data.network.model.Payment
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.data.network.model.WorkOrderPoint
 import br.com.motoflash.core.ui.util.getColor
@@ -20,7 +21,7 @@ import java.util.*
 /**
  * Created by lucascordeiro on 21/10/17.
  */
-class WorkOrderAdapter(val callback: OnWorkOrderCallback, var list: MutableList<WorkOrder>?) : RecyclerView.Adapter<WorkOrderAdapter.ViewHolder>() {
+class WorkOrderAdapter(val callback: OnWorkOrderCallback, var list: MutableList<WorkOrder>?, val motoboy: Boolean = false) : RecyclerView.Adapter<WorkOrderAdapter.ViewHolder>() {
 
     fun clear(){
         list?.clear()
@@ -58,6 +59,16 @@ class WorkOrderAdapter(val callback: OnWorkOrderCallback, var list: MutableList<
         view.txtAddressSecond.text = String.format("%s, %s",addressSecond.address1, addressSecond.number)
 
         view.txtDate.text = SimpleDateFormat("dd/MM/YYYY", Locale.getDefault()).format(Date(workOrder.createdDate!!.seconds * 1000))
+
+        if(motoboy){
+            view.containerMotoboy.visibility = View.VISIBLE
+            view.txtStatusPaymentCourier.backgroundTintList = ContextCompat.getColorStateList(view.context, Payment.Status.valueOf(workOrder.payment?.status!!).getColor(view.context))
+            view.txtStatusPaymentCourier.text = Payment.Status.valueOf(workOrder.payment?.status!!).toLabel()
+
+            view.txtPricePaymentCourier.text =  String.format("Total: R$ %.2f", workOrder.payment?.courierAmount?.toFloat())
+        }else{
+            view.containerMotoboy.visibility = View.GONE
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

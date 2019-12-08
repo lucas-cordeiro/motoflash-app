@@ -21,6 +21,7 @@ import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.data.network.model.WorkOrderPoint
 import br.com.motoflash.core.ui.adapter.WorkOrderPointsAdapter
 import br.com.motoflash.core.ui.util.*
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -118,6 +119,7 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
                     )
                     .subscribe { granted ->
                         if(granted){
+                            presenter.doGetWorkOrder(workOrderId!!)
                             loadLocation()
                         }else{
                             AlertUtil.showAlertNeutral(
@@ -194,6 +196,21 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
 
             for (point in list) {
 
+                when(point.status){
+                    WorkOrderPoint.Status.PENDING.name -> {
+                        iconFactory.setColor(ContextCompat.getColor(this, R.color.colorWhite))
+                        iconFactory.setTextAppearance(R.style.BlueText)
+                    }
+                    WorkOrderPoint.Status.STARTED.name -> {
+                        iconFactory.setColor(ContextCompat.getColor(this, R.color.colorBlue))
+                        iconFactory.setTextAppearance(R.style.WhiteText)
+                    }
+                    WorkOrderPoint.Status.CHECKED_OUT.name -> {
+                        iconFactory.setColor(ContextCompat.getColor(this, R.color.colorGray))
+                        iconFactory.setTextAppearance(R.style.WhiteText)
+                    }
+                }
+
                 val marker = MarkerOptions()
                     .icon(
                         BitmapDescriptorFactory.fromBitmap(
@@ -247,7 +264,7 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
     override fun onStart() {
         super.onStart()
         presenter.onAttach(this)
-        presenter.doGetWorkOrder(workOrderId)
+//        presenter.doGetWorkOrder(workOrderId)
     }
 
     override fun onGetWorkOrder(workOrder: WorkOrder) {
@@ -278,6 +295,15 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
 
         txtStatus.backgroundTintList = ContextCompat.getColorStateList(this, status.getColor(this))
         txtStatus.text = status.toLabel()
+
+        if(workOrder.courier!=null){
+            containerCourier.visibility = View.VISIBLE
+            Glide.with(this).load(workOrder.courier!!.profilePhoto).into(imgProfile)
+            txtName.text = workOrder.courier!!.name
+            txtMobilePhone.text = workOrder.courier!!.mobilePhone
+        }else{
+            containerCourier.visibility = View.GONE
+        }
     }
 
     override fun onNotFoundCourier() {

@@ -19,6 +19,8 @@ import kotlin.collections.HashMap
 
 class HomePresenter<V :HomeMvpView> @Inject
 constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
+
+    private var cancell = false
     override fun doGetQuotation(points: List<WorkOrderPoint>, companyId: String) {
         val body = HashMap<String, Any>()
         body["companyId"] = companyId
@@ -58,15 +60,17 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
             )
             .compose(RxUtil.applyNetworkSchedulers())
             .flatMap {
-                mvpView?.onSearchCourier()
+                mvpView?.onSearchCourier(it["workOrder"]!!.id!!)
                 api.doRunQueue(
                     accessToken = currentTokenId,
                     workOrderId = it["workOrder"]!!.id!!
                 ).compose(RxUtil.applyNetworkSchedulers())
             }
             .subscribe({
-                mvpView?.onCreateWorkOrder(it)
+                if(!cancell)
+                mvpView?.onCreateWorkOrder()
             },{
+                if(!cancell){
                 log("Error: ${it.message}")
                 if(it is HttpException){
                     val error = ErrosUtil.getErrorCode(it)
@@ -78,6 +82,23 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
                 }else{
                     mvpView?.onCreateWorkOrderFail()
                 }
+                }
+            })
+    }
+
+    override fun doCancellWorkOrder(workOrderId: String) {
+        compositeDisposable += api
+            .doCancellWorkOrder(
+                accessToken = currentTokenId,
+                workOrderId = workOrderId
+            )
+            .compose(RxUtil.applyNetworkSchedulers())
+            .subscribe({
+                cancell = true
+                mvpView?.onCancellWorkOrder()
+            },{
+                log("Error: ${it.message}")
+                mvpView?.onCancellWorkOrderFail()
             })
     }
 }

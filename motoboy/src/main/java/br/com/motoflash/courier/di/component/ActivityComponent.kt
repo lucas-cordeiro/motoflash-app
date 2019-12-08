@@ -5,6 +5,7 @@ import br.com.motoflash.courier.di.module.ActivityModule
 import br.com.motoflash.courier.ui.login.LoginActivity
 import br.com.motoflash.courier.ui.main.MainActivity
 import br.com.motoflash.courier.ui.splash.SplashActivity
+import br.com.motoflash.courier.ui.workorder.alert.AlertActivity
 import dagger.Component
 
 
@@ -17,4 +18,5 @@ interface ActivityComponent {
     fun inject(splashActivity: SplashActivity)
     fun inject(mainActivity: MainActivity)
     fun inject(loginActivity: LoginActivity)
+    fun inject(alertActivity: AlertActivity)
 }

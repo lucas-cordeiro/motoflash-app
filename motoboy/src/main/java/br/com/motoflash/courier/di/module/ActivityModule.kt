@@ -12,6 +12,9 @@ import br.com.motoflash.courier.ui.main.MainPresenter
 import br.com.motoflash.courier.ui.splash.SplashMvpPresenter
 import br.com.motoflash.courier.ui.splash.SplashMvpView
 import br.com.motoflash.courier.ui.splash.SplashPresenter
+import br.com.motoflash.courier.ui.workorder.alert.AlertMvpPresenter
+import br.com.motoflash.courier.ui.workorder.alert.AlertMvpView
+import br.com.motoflash.courier.ui.workorder.alert.AlertPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -40,5 +43,9 @@ class ActivityModule(private val mActivity: AppCompatActivity) {
 
     @Provides
     internal fun providLoginMvpPresenter(presenter: LoginPresenter<LoginMvpView>): LoginMvpPresenter<LoginMvpView> =
+        presenter
+
+    @Provides
+    internal fun providAlertMvpPresenter(presenter: AlertPresenter<AlertMvpView>): AlertMvpPresenter<AlertMvpView> =
         presenter
 }
