@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="16sp"
-                    android:textColor="@color/colorBlue"
+                    android:textColor="@color/colorPurple"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_cornes_gray"
-                    android:backgroundTint="@color/colorBlue"
+                    android:backgroundTint="@color/colorPurple"
                     android:textColor="@color/colorWhite"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
@@ -92,8 +92,8 @@
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         app:bgColor="#e1e1e1"
-                        app:fgColorEnd="@color/colorBlue"
-                        app:fgColorStart="@color/colorBlueDark"
+                        app:fgColorEnd="@color/colorPurple"
+                        app:fgColorStart="@color/colorPurpleDark"
                         app:percent="70"
                         app:startAngle="180"
                         app:strokeWidth="14dp"
@@ -127,7 +127,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:tint="@color/colorBlue"
+                        android:tint="@color/colorPurple"
                         app:srcCompat="@drawable/ic_cell"/>
                     <TextView
                         android:id="@+id/txtMobilePhone"
@@ -174,14 +174,14 @@
 
             <Button
                 android:id="@+id/btnRunQueue"
-                android:background="@drawable/rectangle_cornes_white_borders_blue"
+                android:background="@drawable/rectangle_cornes_white_borders_purple"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:textColor="@color/colorBlue"
+                android:textColor="@color/colorPurple"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="Procurar Entregador"
@@ -198,7 +198,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_location_center"
-            android:tint="@color/colorBlue"
+            android:tint="@color/colorPurple"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

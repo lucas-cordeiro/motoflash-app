@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="16sp"
-                android:textColor="@color/colorBlue"
+                android:textColor="@color/colorPurple"
                 android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -93,20 +93,20 @@
                  android:layout_marginStart="10dp"
                  android:layout_height="wrap_content"
                  android:checked="true"
-                 android:textColor="@color/colorBlue"
+                 android:textColor="@color/colorPurple"
                  android:text="Motoboy " />
          </LinearLayout>
 
             <Button
                 android:id="@+id/btnCreate"
-                android:background="@drawable/rectangle_cornes_white_borders_blue"
+                android:background="@drawable/rectangle_cornes_white_borders_purple"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 tools:visibility="visible"
-                android:textColor="@color/colorBlue"
+                android:textColor="@color/colorPurple"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="Criar Entrega"
@@ -138,7 +138,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_location_center"
-            android:tint="@color/colorBlue"
+            android:tint="@color/colorPurple"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

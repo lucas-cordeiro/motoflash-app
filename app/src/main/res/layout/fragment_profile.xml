@@ -15,7 +15,7 @@
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="195dp"
-            android:background="@color/colorBlue"
+            android:background="@color/colorPurple"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -113,7 +113,7 @@
                 tools:scaleY="1"
                 android:scaleX="0"
                 android:scaleY="0"
-                android:textColorHint="@color/colorBlueLight">
+                android:textColorHint="@color/colorPurpleLight">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtEmail"
@@ -127,8 +127,8 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorBlue"
-                    android:textColorHint="@color/colorBlueLight" />
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorPurpleLight" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -140,7 +140,7 @@
                 android:paddingTop="10dp"
                 android:scaleX="0"
                 android:scaleY="0"
-                android:textColorHint="@color/colorBlueLight"
+                android:textColorHint="@color/colorPurpleLight"
                 tools:scaleX="1"
                 tools:scaleY="1">
 
@@ -156,8 +156,8 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorBlue"
-                    android:textColorHint="@color/colorBlueLight" />
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorPurpleLight" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -170,7 +170,7 @@
                 android:scaleY="0"
                 tools:scaleX="1"
                 tools:scaleY="1"
-                android:textColorHint="@color/colorBlueLight">
+                android:textColorHint="@color/colorPurpleLight">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtMobilePhone"
@@ -185,8 +185,8 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorBlue"
-                    android:textColorHint="@color/colorBlueLight" />
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorPurpleLight" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
@@ -234,7 +234,7 @@
                 android:paddingTop="10dp"
                 android:scaleX="0"
                 android:scaleY="0"
-                android:textColorHint="@color/colorBlueLight"
+                android:textColorHint="@color/colorPurpleLight"
                 app:passwordToggleEnabled="true"
                 tools:scaleX="1"
                 tools:scaleY="1">
@@ -251,8 +251,8 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorBlue"
-                    android:textColorHint="@color/colorBlueLight" />
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorPurpleLight" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -263,7 +263,7 @@
                 android:paddingTop="10dp"
                 android:scaleX="0"
                 android:scaleY="0"
-                android:textColorHint="@color/colorBlueLight"
+                android:textColorHint="@color/colorPurpleLight"
                 app:passwordToggleEnabled="true"
                 tools:scaleX="1"
                 tools:scaleY="1">
@@ -280,8 +280,8 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorBlue"
-                    android:textColorHint="@color/colorBlueLight" />
+                    android:textColor="@color/colorPurple"
+                    android:textColorHint="@color/colorPurpleLight" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -313,14 +313,14 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/rectangle_cornes_white_borders_blue"
+            android:background="@drawable/rectangle_cornes_white_borders_purple"
             android:gravity="center"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"
             android:text="Alterar Senha"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorPurple"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/btnSingOut"
             app:layout_constraintEnd_toEndOf="parent"
@@ -330,7 +330,7 @@
             android:id="@+id/btnSingOut"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_cornes_white_borders_blue"
+            android:background="@drawable/rectangle_cornes_white_borders_purple"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
@@ -339,7 +339,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="30dp"
             android:text="Sair"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorPurple"
             android:textSize="18sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -177,7 +177,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
                     },
                     dark = false)
 
-                dialog.show(fragmentManager, "Endereço")
+                dialog.show(fragmentManager!!, "Endereço")
             }else{
                 log("hasNumber")
                 updateWorkOrderPoint(Autocomplete.getPlaceFromIntent(data))
@@ -390,7 +390,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
         btnMotorcycle.setOnClickListener {
             if(btnMotorcycle.isChecked){
                 btnMotorcycle.text = "Motoboy"
-                btnMotorcycle.setTextColor(ContextCompat.getColor(context!!, R.color.colorBlue))
+                btnMotorcycle.setTextColor(ContextCompat.getColor(context!!, R.color.colorPurple))
             }else{
                 btnMotorcycle.text = "Bike"
                 btnMotorcycle.setTextColor(ContextCompat.getColor(context!!, R.color.colorGray))
@@ -449,7 +449,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     private fun boundMap(){
         val iconFactory = IconGenerator(context!!)
         iconFactory.setColor(ContextCompat.getColor(context!!, R.color.colorWhite))
-        iconFactory.setTextAppearance(R.style.BlueText)
+        iconFactory.setTextAppearance(R.style.PurpleText)
 
         clearMarkers()
 
@@ -510,13 +510,13 @@ class HomeFragment : BaseFragment(), HomeMvpView {
 
     override fun onCreateWorkOrder() {
         hideLoading()
-        "Seu pedido foi criado".showSnack(container, backgroundColor = R.color.colorBlue)
+        "Seu pedido foi criado".showSnack(container, backgroundColor = R.color.colorPurple)
             (activity!! as MainActivity).doOpenFragment(1)
     }
 
     override fun onSearchCourier(workOrderId: String) {
         this.workOrderId = workOrderId
-        "Procurando um entregador...".showSnack(container, backgroundColor = R.color.colorBlue)
+        "Procurando um entregador...".showSnack(container, backgroundColor = R.color.colorPurple)
         btnCancell.visibility = View.VISIBLE
     }
 

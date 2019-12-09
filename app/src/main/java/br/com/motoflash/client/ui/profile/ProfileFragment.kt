@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 
@@ -28,9 +30,12 @@ import br.com.motoflash.client.ui.splash.SplashActivity
 import br.com.motoflash.core.data.network.model.ErrorCode
 import br.com.motoflash.core.data.network.model.User
 import br.com.motoflash.core.ui.util.*
+import com.asksira.bsimagepicker.BSImagePicker
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.bumptech.glide.request.RequestOptions
+import com.esafirm.imagepicker.features.ImagePicker
+import com.esafirm.imagepicker.features.ReturnMode
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.File
@@ -42,7 +47,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class ProfileFragment : BaseFragment(), ProfileMvpView {
+class ProfileFragment : BaseFragment(), ProfileMvpView, BSImagePicker.OnSingleImageSelectedListener, BSImagePicker.ImageLoaderDelegate {
 
     @Inject
     lateinit var presenter: ProfileMvpPresenter<ProfileMvpView>
@@ -63,10 +68,100 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    override fun onSingleImageSelected(uri: Uri?, tag: String?) {
+        log("onSingleImageSelected ${File(uri.toString()).exists()}")
+
+        currentPhotoPath = uri.toString()
+        val file = File(currentPhotoPath!!)
+        val bmOptions =  BitmapFactory.Options()
+        val bitmap = BitmapFactory.decodeFile(file.absolutePath,bmOptions)
+
+        profilePhoto.imageTintMode = null
+        Glide.with(context!!).applyDefaultRequestOptions(RequestOptions().circleCrop()).load(bitmap).into(profilePhoto)
+    }
+
+    override fun loadImage(imageFile: File?, ivImage: ImageView?) {
+        log("loadImage ${imageFile!!.exists()}")
+
+
+//        val ei = ExifInterface(currentPhotoPath!!)
+//        val orientation = ei.getAttributeInt(
+//            ExifInterface.TAG_ORIENTATION,
+//            ExifInterface.ORIENTATION_UNDEFINED)
+//
+//
+//        var rotatedBitmap: Bitmap? = null
+//        when (orientation) {
+//
+//            ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap =
+//                TransformationUtils.rotateImage(bitmap, 90)
+//
+//            ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap =
+//                TransformationUtils.rotateImage(bitmap, 180)
+//
+//            ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap =
+//                TransformationUtils.rotateImage(bitmap, 270)
+//
+//            ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
+//            else -> rotatedBitmap = bitmap
+//        }
+
+
+//        currentPhotoPath = Uri.fromFile(FileUtils.saveBitmap(context!!, rotatedBitmap!!)).toString()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK){
+        if(ImagePicker.shouldHandle(requestCode, resultCode, data)){
+            val image = ImagePicker.getFirstImageOrNull(data)
+            log("picker: ${File(image.path).exists()} ${image.path}")
+
+            currentPhotoPath = image.path
+
             if(File(currentPhotoPath!!).exists()){
+                log("file exist")
+                val file = File(currentPhotoPath!!)
+                val bmOptions =  BitmapFactory.Options()
+                val bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),bmOptions)
+
+                val ei = ExifInterface(currentPhotoPath!!)
+                val orientation = ei.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED)
+
+
+                var rotatedBitmap: Bitmap? = null
+                when (orientation) {
+
+                    ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap =
+                        TransformationUtils.rotateImage(bitmap, 90)
+
+                    ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap =
+                        TransformationUtils.rotateImage(bitmap, 180)
+
+                    ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap =
+                        TransformationUtils.rotateImage(bitmap, 270)
+
+                    ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
+                    else -> rotatedBitmap = bitmap
+                }
+
+                profilePhoto.imageTintMode = null
+                Glide.with(context!!).applyDefaultRequestOptions(RequestOptions().circleCrop()).load(rotatedBitmap).into(profilePhoto)
+
+                currentPhotoPath = Uri.fromFile(FileUtils.saveBitmap(context!!, rotatedBitmap!!)).toString()
+            }
+        }
+        if(requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK){
+            if(data?.data!=null){
+                log("data!=null")
+                log("currentPhotoPath: ${File(currentPhotoPath!!).exists()} ${File(ImageUtils.getPickImageResultUri(context!!, data).toString()).exists()} ${File(data.data.toString()).exists()}")
+//                currentPhotoPath = ImageUtils.getPickImageResultUri(context!!, data).toString()
+//                log("currentPhotoPath: $currentPhotoPath")
+            }
+
+            if(File(currentPhotoPath!!).exists()){
+                log("file exist")
                 val file = File(currentPhotoPath!!)
                 val bmOptions =  BitmapFactory.Options()
                 val bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),bmOptions)
@@ -184,8 +279,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
                 if(!editMode){
                     if(updatePasswordMode){
                         btnUpdatePassword.text = "Alterar Senha"
-                        btnUpdatePassword.setTextColor(ContextCompat.getColor(context!!, R.color.colorBlue))
-                        btnUpdatePassword.setBackgroundResource(R.drawable.rectangle_cornes_white_borders_blue)
+                        btnUpdatePassword.setTextColor(ContextCompat.getColor(context!!, R.color.colorPurple))
+                        btnUpdatePassword.setBackgroundResource(R.drawable.rectangle_cornes_white_borders_purple)
                         containerUpdatePassword.hideItems(200)
                     }else{
                         btnUpdatePassword.text = "Cancelar"
@@ -286,7 +381,27 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
                 )
                 .subscribe { granted ->
                     if(granted){
-                        dispatchTakePictureIntent(REQUEST_PICK_IMAGE)
+//                        val url = ImageUtils.getCaptureImageOutputUri(context!!)
+//                        currentPhotoPath = url.toString()
+//                        startActivityForResult(ImageUtils.getPickImageChooserIntent(context!!, url), REQUEST_PICK_IMAGE)
+
+//                        val singleSelectionPicker = BSImagePicker
+//                            .Builder("br.com.motoflash.client.fileprovider")
+//                            .setTag("TakeProfile")
+//                            .build()
+//                        singleSelectionPicker.show(childFragmentManager, "picker")
+
+                        ImagePicker.create(this)
+                            .returnMode(ReturnMode.ALL) // set whether pick and / or camera action should return immediate result or not.
+                            .folderMode(true) // folder mode (false by default)
+                            .toolbarFolderTitle("Arquivos") // folder selection title
+                            .toolbarImageTitle("Clique para selecionar") // image selection title
+                            .toolbarArrowColor(Color.WHITE) // Toolbar 'up' arrow color
+                            .includeVideo(false) // Show video on image picker
+                            .single() // single mode
+                            .showCamera(true) // show camera or not (true by default)
+                            .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                            .start() // start image picker activity with request code
                     }else{
                         AlertUtil.showAlertNeutral(
                             context = activity!!,
@@ -309,8 +424,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     override fun onUpdatePassword() {
         btnUpdatePassword.text = "Alterar Senha"
-        btnUpdatePassword.setTextColor(ContextCompat.getColor(context!!, R.color.colorBlue))
-        btnUpdatePassword.setBackgroundResource(R.drawable.rectangle_cornes_white_borders_blue)
+        btnUpdatePassword.setTextColor(ContextCompat.getColor(context!!, R.color.colorPurple))
+        btnUpdatePassword.setBackgroundResource(R.drawable.rectangle_cornes_white_borders_purple)
         containerUpdatePassword.hideItems(200)
 
 //        "Senha Atualizada".showSnack(container, backgroundColor = R.color.colorBlue)
@@ -334,7 +449,7 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         txtUserEmail.text = edtEmail.text.toString()
         btnUpdatePassword.showAlpha()
 
-        "Dados atualizados!".showSnack(container, backgroundColor = R.color.colorBlue)
+        "Dados atualizados!".showSnack(container, backgroundColor = R.color.colorPurple)
     }
 
     override fun onUpdateProfileError(errorCode: ErrorCode) {

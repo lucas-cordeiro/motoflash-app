@@ -13,8 +13,7 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/logo_small"
-        android:tint="@color/colorBlue"
+        android:src="@drawable/motoflash_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Motoflash"
-        android:textColor="@color/colorBlue"
+        android:text="MotoFlash"
+        android:textColor="@color/colorPurple"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_cornes_gray_light"
             android:paddingTop="10dp"
-            android:textColorHint="@color/colorBlueLight">
+            android:textColorHint="@color/colorPurpleLight">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtEmail"
@@ -67,8 +66,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/colorBlue"
-                android:textColorHint="@color/colorBlueLight" />
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorPurpleLight" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +79,7 @@
             android:paddingTop="10dp"
             android:scaleX="0"
             android:scaleY="0"
-            android:textColorHint="@color/colorBlueLight"
+            android:textColorHint="@color/colorPurpleLight"
             android:visibility="gone"
             app:passwordToggleEnabled="true"
             tools:scaleX="1"
@@ -99,8 +98,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/colorBlue"
-                android:textColorHint="@color/colorBlueLight" />
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorPurpleLight" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,7 +110,7 @@
             android:paddingTop="10dp"
             android:scaleX="0"
             android:scaleY="0"
-            android:textColorHint="@color/colorBlueLight"
+            android:textColorHint="@color/colorPurpleLight"
             android:visibility="gone"
             app:passwordToggleEnabled="true"
             tools:scaleX="1"
@@ -130,8 +129,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/colorBlue"
-                android:textColorHint="@color/colorBlueLight" />
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorPurpleLight" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -142,7 +141,7 @@
             android:paddingTop="10dp"
             android:scaleX="0"
             android:scaleY="0"
-            android:textColorHint="@color/colorBlueLight"
+            android:textColorHint="@color/colorPurpleLight"
             android:visibility="gone"
             tools:scaleX="1"
             tools:scaleY="1"
@@ -160,8 +159,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/colorBlue"
-                android:textColorHint="@color/colorBlueLight" />
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorPurpleLight" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -172,7 +171,7 @@
             android:paddingTop="10dp"
             android:scaleX="0"
             android:scaleY="0"
-            android:textColorHint="@color/colorBlueLight"
+            android:textColorHint="@color/colorPurpleLight"
             android:visibility="gone"
             tools:scaleX="1"
             tools:scaleY="1"
@@ -191,8 +190,8 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/colorBlue"
-                android:textColorHint="@color/colorBlueLight" />
+                android:textColor="@color/colorPurple"
+                android:textColorHint="@color/colorPurpleLight" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar

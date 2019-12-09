@@ -181,7 +181,7 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
     private fun boundMap(move: Boolean){
         val iconFactory = IconGenerator(this)
         iconFactory.setColor(ContextCompat.getColor(this, R.color.colorWhite))
-        iconFactory.setTextAppearance(R.style.BlueText)
+        iconFactory.setTextAppearance(R.style.PurpleText)
 
         clearMarkers()
 
@@ -199,10 +199,10 @@ class WorkOrderDetailActivity : BaseActivity(), WorkOrderDetailMvpView {
                 when(point.status){
                     WorkOrderPoint.Status.PENDING.name -> {
                         iconFactory.setColor(ContextCompat.getColor(this, R.color.colorWhite))
-                        iconFactory.setTextAppearance(R.style.BlueText)
+                        iconFactory.setTextAppearance(R.style.PurpleText)
                     }
                     WorkOrderPoint.Status.STARTED.name -> {
-                        iconFactory.setColor(ContextCompat.getColor(this, R.color.colorBlue))
+                        iconFactory.setColor(ContextCompat.getColor(this, R.color.colorPurple))
                         iconFactory.setTextAppearance(R.style.WhiteText)
                     }
                     WorkOrderPoint.Status.CHECKED_OUT.name -> {

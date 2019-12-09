@@ -74,7 +74,7 @@ class LocationService : Service() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.app_name))
             .setContentIntent(broadcastIntent)
-            .setSmallIcon(R.drawable.logo_small)
+            .setSmallIcon(R.drawable.motoflash_logo_blue)
 
         if(start){
             builder.setOngoing(true)

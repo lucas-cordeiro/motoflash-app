@@ -17,9 +17,12 @@
     <color name="colorRedLight">#EB8E8F</color>
     <color name="colorRed">#F44336</color>
     <color name="colorGreen">#8BC34A</color>
-    <color name="colorBlue">#2E6FF2</color>
-    <color name="colorBlueDark">#0655F5</color>
-    <color name="colorBlueLight">#85ADFF</color>
+    <color name="colorPurple">#9413f3</color>
+    <color name="colorPurpleDark">#9200ff</color>
+    <color name="colorPurpleLight">#be67ff</color>
+    <color name="colorBlue">#03A9F4</color>
+    <color name="colorBlueDark">#2196F3</color>
+    <color name="colorBlueLight">#25BBFF</color>
     <color name="colorGreenLight">#89FF00</color>
     <color name="colorYellow">#FFEB3B</color>
     <color name="colorOrange">#FF9800</color>

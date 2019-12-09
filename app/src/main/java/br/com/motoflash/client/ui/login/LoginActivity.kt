@@ -130,7 +130,7 @@ class LoginActivity : BaseActivity(), LoginMvpView {
         checkedEmail = true
         newUser = !exists
         if(newUser){
-            "Vamos criar uma nova conta!".showSnack(container, backgroundColor = R.color.colorBlue)
+            "Vamos criar uma nova conta!".showSnack(container, backgroundColor = R.color.colorPurple)
             for (i in 0 until containerLoginFields.childCount) {
                 val v = containerLoginFields.getChildAt(i)
 
@@ -145,7 +145,7 @@ class LoginActivity : BaseActivity(), LoginMvpView {
                 }
             }
         }else{
-            "Bem-vindo de volta, informe suas credenciais!".showSnack(container, backgroundColor = R.color.colorBlue)
+            "Bem-vindo de volta, informe suas credenciais!".showSnack(container, backgroundColor = R.color.colorPurple)
             inputPassword.visibility = View.VISIBLE
             val viewAnimator: ViewPropertyAnimatorCompat = ViewCompat.animate(inputPassword)
                 .scaleY(1f).scaleX(1f)

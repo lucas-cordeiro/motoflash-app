@@ -50,7 +50,7 @@ class ClientFirebaseMessagingService : FirebaseMessagingService() {
             .setLights(Color.argb(100, 255, 48, 55), 5000, 5000)
             .setAutoCancel(true)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-            .setSmallIcon(R.drawable.logo_small)
+            .setSmallIcon(R.drawable.motoflash_purple)
             .setVibrate(longArrayOf(100, 100))
 
         builder.color = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)

@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_small" />
+        app:srcCompat="@drawable/motoflash_logo_white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -40,7 +40,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:alpha="0"
-        android:text="Motoflash"
+        android:text="MotoFlash"
         android:textColor="@color/colorWhite"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -55,7 +55,8 @@
         android:layout_height="wrap_content"
         android:alpha="0"
         tools:alpha="1"
-        android:text="Entregas com logística"
+        android:visibility="gone"
+        android:text="Para clientes..."
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold"

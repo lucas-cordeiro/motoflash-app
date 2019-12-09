@@ -4,6 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 
 //Kotlin Annotation Processing (KAPT) plugin
 apply plugin: 'kotlin-kapt'
+
+//Fabric
+apply plugin: 'io.fabric'
+
+//Perform
+apply plugin: 'com.google.firebase.firebase-perf'
+
 android {
     compileSdkVersion 29
 

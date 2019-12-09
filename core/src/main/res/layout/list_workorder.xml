@@ -33,7 +33,7 @@
             android:textSize="14sp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorGray"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="Rua da Glória, 314"
@@ -42,7 +42,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorBlueLight"
+            android:tint="@color/colorGreen"
             android:src="@drawable/ic_pin"/>
 
     </LinearLayout>
@@ -70,7 +70,7 @@
             android:textSize="14sp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorGray"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="Rua da Glória, 314"
@@ -79,7 +79,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/colorBlueLight"
+            android:tint="@color/colorGreen"
             android:src="@drawable/ic_pin"/>
 
     </LinearLayout>
