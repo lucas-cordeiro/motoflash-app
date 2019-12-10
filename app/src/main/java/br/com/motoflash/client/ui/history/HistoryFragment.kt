@@ -15,7 +15,7 @@ import br.com.motoflash.client.ui.detail.WorkOrderDetailActivity
 import br.com.motoflash.client.ui.main.MainActivity
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.ui.adapter.WorkOrderAdapter
-import com.google.android.gms.auth.account.WorkAccountApi
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_history.*
 import javax.inject.Inject
 
@@ -25,6 +25,8 @@ import javax.inject.Inject
 class HistoryFragment : BaseFragment(), HistoryMvpView {
 
     private val list: MutableList<WorkOrder> = ArrayList()
+
+    private var containerFrame: View? = null
 
     private val adapter = WorkOrderAdapter(
         list = list,
@@ -46,7 +48,9 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        containerFrame = view.findViewById<View>(R.id.container)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,14 +61,16 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
     }
 
     override fun setUp() {
+        if(containerFrame!=null){
         recyclerView.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
+        }
     }
 
     override fun onStart() {
         super.onStart()
         presenter.onAttach(this)
-        presenter.doGetWorkOrders((activity!! as MainActivity).getCurrentUser().id!!)
+        presenter.doGetWorkOrders(FirebaseAuth.getInstance().uid!!)
     }
 
     override fun onGetWorkOrders(workOrders: List<WorkOrder>) {

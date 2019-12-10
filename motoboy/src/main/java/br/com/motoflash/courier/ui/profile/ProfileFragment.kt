@@ -70,10 +70,6 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        fragmentComponent.inject(this)
-        presenter.onAttach(this)
-
         return view
     }
 
@@ -157,8 +153,10 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         setUp()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        fragmentComponent.inject(this)
+        presenter.onAttach(this)
         refreshCourier()
     }
 
@@ -349,8 +347,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         presenter.onDetach()
     }
 
