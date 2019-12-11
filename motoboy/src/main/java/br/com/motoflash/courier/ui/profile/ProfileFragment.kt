@@ -158,6 +158,7 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         fragmentComponent.inject(this)
         presenter.onAttach(this)
         refreshCourier()
+        OPEN = true
     }
 
     @SuppressLint("CheckResult")
@@ -211,45 +212,51 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
     }
 
     private fun loadCourier(){
-        log("loadCourier")
-        switchOnline?.isChecked = courier.online
-        if(switchOnline?.isChecked == true){
-            online()
-        }
-        else{
-            offline()
-        }
+        if(OPEN){
+            log("loadCourier")
+            switchOnline?.isChecked = courier.online
+            if(switchOnline?.isChecked == true){
+                online()
+            }
+            else{
+                offline()
+            }
 
-        imgProfile?.let{
-            Glide.with(this).load(courier.profilePhoto).circleCrop().into(it)
-        }
-        txtLabelLocation.text = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(Prefs.getLong(LAST_LOCATION_TIME, 0L)))
-        txtName.text = courier.name
+            imgProfile?.let{
+                Glide.with(this).load(courier.profilePhoto).circleCrop().into(it)
+            }
+            txtLabelLocation.text = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(Prefs.getLong(LAST_LOCATION_TIME, 0L)))
+            txtName.text = courier.name
 
-        labelVec.text = "${courier.currentEquipment!!.plate} - ${courier.currentEquipment!!.model} (${courier.currentEquipment!!.year})"
+            labelVec.text = "${courier.currentEquipment!!.plate} - ${courier.currentEquipment!!.model} (${courier.currentEquipment!!.year})"
+        }
     }
 
     private fun online(){
-        txtLabelOnline.text = "Online"
-        imgLocation.setImageResource(R.drawable.ic_location_on)
-        imgLocation.setColorFilter(ContextCompat.getColor(context!!, R.color.colorBlue), PorterDuff.Mode.SRC_IN)
-        imgLocation.startAnimation(AlphaAnimation(1f,0f).apply {
-            duration = 500
-            fillAfter = true
-            interpolator = DecelerateInterpolator()
-            repeatCount = Animation.INFINITE
-            repeatMode = Animation.REVERSE
-        })
-        Prefs.putBoolean(COURIER_ONLINE, true)
-        LocationService.startLocationServices(applicationContext = context!!)
+        if(context!=null){
+            txtLabelOnline.text = "Online"
+            imgLocation.setImageResource(R.drawable.ic_location_on)
+            imgLocation.setColorFilter(ContextCompat.getColor(context!!, R.color.colorBlue), PorterDuff.Mode.SRC_IN)
+            imgLocation.startAnimation(AlphaAnimation(1f,0f).apply {
+                duration = 500
+                fillAfter = true
+                interpolator = DecelerateInterpolator()
+                repeatCount = Animation.INFINITE
+                repeatMode = Animation.REVERSE
+            })
+            Prefs.putBoolean(COURIER_ONLINE, true)
+            LocationService.startLocationServices(applicationContext = context!!)
+        }
     }
     private fun offline(){
-        txtLabelOnline.text = "Offline"
-        imgLocation.setImageResource(R.drawable.ic_location_off)
-        imgLocation.setColorFilter(ContextCompat.getColor(context!!, R.color.colorGray), PorterDuff.Mode.SRC_IN)
-        imgLocation.clearAnimation()
-        Prefs.putBoolean(COURIER_ONLINE, false)
-        LocationService.stopLocationServices(applicationContext = context!!)
+        if(context!=null){
+            txtLabelOnline.text = "Offline"
+            imgLocation.setImageResource(R.drawable.ic_location_off)
+            imgLocation.setColorFilter(ContextCompat.getColor(context!!, R.color.colorGray), PorterDuff.Mode.SRC_IN)
+            imgLocation.clearAnimation()
+            Prefs.putBoolean(COURIER_ONLINE, false)
+            LocationService.stopLocationServices(applicationContext = context!!)
+        }
     }
 
     override fun onUpdateOnline() {
@@ -265,14 +272,26 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     override fun onUpdateFail() {
         hideLoading()
-        "Falha ao atualizar".showSnack(container, backgroundColor = R.color.colorRed)
-        if(switchOnline.isChecked){
-            offline()
-        }else{
-            online()
-        }
-
         switchOnline.isChecked = !switchOnline.isChecked
+
+        "Falha ao atualizar".showSnack(container, backgroundColor = R.color.colorRed)
+//        if(switchOnline.isChecked){
+//            offline()
+//        }else{
+//            online()
+//        }
+    }
+
+    override fun onUpdateInvalidCourier() {
+        hideLoading()
+        "Não é possível mudar seu status durante uma corrida".showSnack(container, backgroundColor = R.color.colorRed)
+        switchOnline.isChecked = !switchOnline.isChecked
+
+//        if(switchOnline.isChecked){
+//            offline()
+//        }else{
+//            online()
+//        }
     }
 
     override fun onUpdateProfilePhoto() {
@@ -349,6 +368,7 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     override fun onPause() {
         super.onPause()
+        OPEN = false
         presenter.onDetach()
     }
 

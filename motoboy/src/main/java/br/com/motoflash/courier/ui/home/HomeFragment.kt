@@ -158,7 +158,7 @@ class HomeFragment : BaseFragment(), HomeMvpView {
             }
         }
 
-        if(load)
+        if(load && context != null)
         boundMap(false, workOrder)
     }
 

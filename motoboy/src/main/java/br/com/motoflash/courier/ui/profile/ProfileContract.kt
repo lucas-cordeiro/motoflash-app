@@ -13,6 +13,7 @@ interface ProfileMvpPresenter<V :ProfileMvpView> : MvpPresenter<V> {
 interface ProfileMvpView : MvpView {
     fun onUpdateOnline()
     fun onUpdateFail()
+    fun onUpdateInvalidCourier()
     fun onUpdateProfilePhoto()
     fun onUpdateProfilePhotoFail()
 }

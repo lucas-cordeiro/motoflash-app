@@ -3,10 +3,12 @@ package br.com.motoflash.courier.ui.profile
 import android.net.Uri
 import br.com.motoflash.core.data.network.model.Courier
 import br.com.motoflash.core.ui.util.DEVICE_ID
+import br.com.motoflash.core.ui.util.ErrosUtil
 import br.com.motoflash.core.ui.util.RxUtil
 import br.com.motoflash.courier.ui.base.BasePresenter
 import com.pixplicity.easyprefs.library.Prefs
 import io.reactivex.rxkotlin.plusAssign
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class ProfilePresenter<V : ProfileMvpView> @Inject
@@ -28,7 +30,15 @@ constructor() : BasePresenter<V>(), ProfileMvpPresenter<V> {
                 mvpView?.onUpdateOnline()
             },{
                 log("Error: ${it.message}")
-                mvpView?.onUpdateFail()
+                if(it is HttpException){
+                    val error = ErrosUtil.getErrorCode(it)
+                    log("field: ${error.field}")
+                    mvpView?.run {
+                        onUpdateInvalidCourier()
+                    }
+                }else{
+                    mvpView?.onUpdateFail()
+                }
             })
     }
 
