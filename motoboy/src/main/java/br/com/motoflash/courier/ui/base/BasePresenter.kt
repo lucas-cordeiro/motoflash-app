@@ -69,6 +69,7 @@ open class BasePresenter<V : MvpView>  :
 
     protected fun getUserDevice(uniqueId: String) : UserDevice {
         val userDevice = UserDevice()
+        userDevice.platform = "MOTOBOY_ANDROID"
         userDevice.manufacturer = Build.MANUFACTURER
         userDevice.brand = Build.BRAND
         userDevice.deviceToken = Prefs.getString(DEVICE_MESSAGE_ID, "")

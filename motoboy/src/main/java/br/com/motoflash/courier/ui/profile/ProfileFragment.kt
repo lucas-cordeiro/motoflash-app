@@ -64,6 +64,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     private var currentPhotoPath: String? = null
 
+    private var logout = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -194,16 +196,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
         btnLogout.setOnClickListener {
             showLoading()
-            AuthUI.getInstance().signOut(context!!).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Prefs.clear()
-                    startActivity(Intent(context!!, SplashActivity::class.java))
-                    activity!!.finish()
-                } else {
-                    hideLoading()
-                    "Falha ao sair".showSnack(container, backgroundColor = R.color.colorRed)
-                }
-            }
+            logout = true
+            presenter.doUpdateOnline(courierId = courier.id!!, online = false)
         }
 
         imgProfile.setOnClickListener {
@@ -265,6 +259,18 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
 
     override fun onUpdateOnline() {
         hideLoading()
+        if(logout){
+            AuthUI.getInstance().signOut(context!!).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Prefs.clear()
+                    startActivity(Intent(context!!, SplashActivity::class.java))
+                    activity!!.finish()
+                } else {
+                    hideLoading()
+                    "Falha ao sair".showSnack(container, backgroundColor = R.color.colorRed)
+                }
+            }
+        }
         if(switchOnline.isChecked){
             "Você está online".showSnack(container, backgroundColor = R.color.colorBlue)
             online()

@@ -49,6 +49,8 @@ class AlertActivity : BaseActivity(), AlertMvpView {
 
     private var currentValueAnimatior = 0f
 
+    private var paused = false
+
     val timeToAccept by lazy {
         intent.getStringExtra(PARAM_ACCEPTTIME).toLong() / 1000
     }
@@ -155,7 +157,7 @@ class AlertActivity : BaseActivity(), AlertMvpView {
             if (valueAnimator.animatedFraction >= 1) {
                 containerProgress.visibility = View.GONE
                 if(!accept && !denie){
-                    startLoadAccept()
+//                    startLoadAccept()
                     showToast("Os Ignorada")
                     presenter.doDenieWorkOrder(
                         courierId = Prefs.getString(COURIER_ID, ""),
@@ -206,6 +208,7 @@ class AlertActivity : BaseActivity(), AlertMvpView {
 
     override fun onAssignWorkOrderFail() {
         if(!accept){
+            paused = false
             valueAnimator.resume()
             showToast("Falha ao aceitar a OS")
             stopLoad()
@@ -252,7 +255,12 @@ class AlertActivity : BaseActivity(), AlertMvpView {
 
         progressBar.max = 100
 
-        valueAnimator.resume()
+        if(paused){
+            paused = true
+            valueAnimator.resume()
+        }else{
+            valueAnimator.start()
+        }
 
         txtPrice.visibility = View.GONE
         if (workOrder.quotation?.price != null) {
@@ -342,6 +350,7 @@ class AlertActivity : BaseActivity(), AlertMvpView {
                 workOrderId = workOrderId
             )
             valueAnimator.pause()
+            paused = true
             startLoadAccept()
         }
     }
@@ -385,12 +394,16 @@ class AlertActivity : BaseActivity(), AlertMvpView {
                 duration = progressBar.progress * animationDuration / 100.toLong()
                 fillAfter = true
             })
-        presenter.doDenieWorkOrder(
-            courierId = FirebaseAuth.getInstance().currentUser!!.uid!!,
-            workOrderId = workOrderId
-        )
-        valueAnimator.pause()
-        startLoadRefuse()
+//        presenter.doDenieWorkOrder(
+//            courierId = FirebaseAuth.getInstance().currentUser!!.uid!!,
+//            workOrderId = workOrderId
+//        )
+        if(paused){
+            paused = true
+            valueAnimator.resume()
+        }
+//        paused = true
+//        startLoadRefuse()
     }
 
     private fun clickDismiss() {
@@ -398,6 +411,9 @@ class AlertActivity : BaseActivity(), AlertMvpView {
             if (mMediaPlayer.isPlaying) {
                 mMediaPlayer.stop()
             }
+            startLoadRefuse()
+            presenter.doDenieWorkOrder(courierId = FirebaseAuth.getInstance().currentUser!!.uid!!,
+                workOrderId = workOrderId)
         }
     }
 
