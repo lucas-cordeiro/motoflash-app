@@ -61,10 +61,8 @@ class HistoryFragment : BaseFragment(), HistoryMvpView {
     }
 
     override fun setUp() {
-        if(containerFrame!=null){
         recyclerView.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
-        }
     }
 
     override fun onStart() {

@@ -232,6 +232,7 @@ class AlertActivity : BaseActivity(), AlertMvpView {
 
     private fun loadWorkOrder(workOrder: WorkOrder) {
         if (workOrder.status != WorkOrder.Status.PENDING.name) {
+            mMediaPlayer.stop()
             if(workOrder.courierId != Prefs.getString(COURIER_ID, "")) {
                 showToast("OS não está mais disponível")
                 finish()
@@ -248,11 +249,10 @@ class AlertActivity : BaseActivity(), AlertMvpView {
             mMediaPlayer.start()
         }
 
-        log("WorkOrder: ${Gson().toJson(workOrder)}")
 
         progressBar.max = 100
 
-        valueAnimator.start()
+        valueAnimator.resume()
 
         txtPrice.visibility = View.GONE
         if (workOrder.quotation?.price != null) {
@@ -335,9 +335,8 @@ class AlertActivity : BaseActivity(), AlertMvpView {
 
     private fun clickAccept() {
         runOnUiThread {
-            if (mMediaPlayer.isPlaying) {
+
                 mMediaPlayer.stop()
-            }
             presenter.doAssignWorkOrder(
                 courierId = FirebaseAuth.getInstance().uid!!,
                 workOrderId = workOrderId

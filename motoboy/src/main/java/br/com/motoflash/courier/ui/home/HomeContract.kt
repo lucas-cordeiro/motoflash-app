@@ -7,6 +7,7 @@ import br.com.motoflash.courier.ui.base.MvpView
 
 interface HomeMvpPresenter<V :HomeMvpView> : MvpPresenter<V> {
     fun doGetCurrentWorkOrder(courierId: String)
+    fun doSetRunningFalse(courierId: String)
     fun doStartWorkOrder(courierId: String, workOrderId: String, workOrder: WorkOrder)
     fun doStartPoint(courierId: String, workOrderId: String, workOrderPointId: String, workOrder: WorkOrder)
     fun doFinishPoint(courierId: String, workOrderId: String, workOrderPointId: String, workOrder: WorkOrder)

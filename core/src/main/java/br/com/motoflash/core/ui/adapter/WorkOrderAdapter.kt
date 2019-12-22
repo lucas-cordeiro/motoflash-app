@@ -9,6 +9,7 @@ import br.com.motoflash.core.R
 import br.com.motoflash.core.data.network.model.Payment
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.data.network.model.WorkOrderPoint
+import br.com.motoflash.core.ui.util.Mask
 import br.com.motoflash.core.ui.util.getColor
 import br.com.motoflash.core.ui.util.getLabel
 import br.com.motoflash.core.ui.util.toLabel
@@ -62,12 +63,23 @@ class WorkOrderAdapter(val callback: OnWorkOrderCallback, var list: MutableList<
 
         if(motoboy){
             view.containerMotoboy.visibility = View.VISIBLE
+            view.containerInfoClient.visibility = View.VISIBLE
+
             view.txtStatusPaymentCourier.backgroundTintList = ContextCompat.getColorStateList(view.context, Payment.Status.valueOf(workOrder.payment?.status!!).getColor(view.context))
             view.txtStatusPaymentCourier.text = Payment.Status.valueOf(workOrder.payment?.status!!).toLabel()
 
             view.txtPricePaymentCourier.text =  String.format("Total: R$ %.2f", workOrder.payment?.courierAmount?.toFloat())
+
+            view.txtClientName.text = workOrder.user?.name
+            if(workOrder.user?.mobilePhone != null){
+                view.txtClientMobilePhone.visibility = View.VISIBLE
+                view.txtClientMobilePhone.text = Mask.mask(Mask.MOBILE_PHONE_MASK, workOrder.user?.mobilePhone?.substring(3)?:"")
+            }else{
+                view.txtClientMobilePhone.visibility = View.GONE
+            }
         }else{
             view.containerMotoboy.visibility = View.GONE
+            view.containerInfoClient.visibility = View.GONE
         }
     }
 

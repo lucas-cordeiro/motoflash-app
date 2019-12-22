@@ -59,13 +59,13 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
                 body = toBodyJsonObject(body)
             )
             .compose(RxUtil.applyNetworkSchedulers())
-            .flatMap {
-                mvpView?.onSearchCourier(it["workOrder"]!!.id!!)
-                api.doRunQueue(
-                    accessToken = currentTokenId,
-                    workOrderId = it["workOrder"]!!.id!!
-                ).compose(RxUtil.applyNetworkSchedulers())
-            }
+//            .flatMap {
+//                mvpView?.onSearchCourier(it["workOrder"]!!.id!!)
+//                api.doRunQueue(
+//                    accessToken = currentTokenId,
+//                    workOrderId = it["workOrder"]!!.id!!
+//                ).compose(RxUtil.applyNetworkSchedulers())
+//            }
             .subscribe({
                 if(!cancell)
                 mvpView?.onCreateWorkOrder()

@@ -16,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.motoflash.core.data.network.model.WorkOrder
 import br.com.motoflash.core.data.network.model.WorkOrderPoint
 import br.com.motoflash.core.ui.adapter.WorkOrderAdapter
-import br.com.motoflash.core.ui.util.COURIER_ID
-import br.com.motoflash.core.ui.util.CommonsUtil
-import br.com.motoflash.core.ui.util.showSnack
-import br.com.motoflash.core.ui.util.toBold
+import br.com.motoflash.core.ui.util.*
 
 import br.com.motoflash.courier.R
 import br.com.motoflash.courier.ui.base.BaseFragment
@@ -199,6 +196,8 @@ class HomeFragment : BaseFragment(), HomeMvpView {
     }
 
     override fun onGetEmptyWorkOrder() {
+        Prefs.putString(CURRENT_WORK_ORDER, "")
+        presenter.doSetRunningFalse(courierId = Prefs.getString(COURIER_ID, ""))
         txtEmpty.visibility = View.VISIBLE
         containerWorkOrder.visibility = View.GONE
     }

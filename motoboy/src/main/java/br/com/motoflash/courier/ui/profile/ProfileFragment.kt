@@ -157,8 +157,8 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
         super.onResume()
         fragmentComponent.inject(this)
         presenter.onAttach(this)
-        refreshCourier()
         OPEN = true
+        refreshCourier()
     }
 
     @SuppressLint("CheckResult")
@@ -228,7 +228,11 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
             txtLabelLocation.text = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(Prefs.getLong(LAST_LOCATION_TIME, 0L)))
             txtName.text = courier.name
 
-            labelVec.text = "${courier.currentEquipment!!.plate} - ${courier.currentEquipment!!.model} (${courier.currentEquipment!!.year})"
+            if(courier.cnh){
+                labelVec.text = "${courier.currentEquipment!!.plate} - ${courier.currentEquipment!!.model} (${courier.currentEquipment!!.year})"
+            }else{
+                labelVec.text = "Bike"
+            }
         }
     }
 

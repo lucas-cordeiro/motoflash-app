@@ -18,6 +18,13 @@ constructor() : BasePresenter<V>(), HomeMvpPresenter<V> {
     private var removeListenerRegistrationAssign: ListenerRegistration? = null
     private var removeListenerRegistrationExecution: ListenerRegistration? = null
 
+    override fun doSetRunningFalse(courierId: String) {
+        firestore
+            .collection("couriers")
+            .document(courierId)
+            .update("running",false)
+    }
+
     override fun doGetCurrentWorkOrder(courierId: String) {
         mvpView?.onGetEmptyWorkOrder()
 
