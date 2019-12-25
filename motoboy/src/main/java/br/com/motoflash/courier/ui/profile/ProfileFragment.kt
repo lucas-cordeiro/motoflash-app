@@ -260,6 +260,7 @@ class ProfileFragment : BaseFragment(), ProfileMvpView {
     override fun onUpdateOnline() {
         hideLoading()
         if(logout){
+            LocationService.stopLocationServices(applicationContext = context!!)
             AuthUI.getInstance().signOut(context!!).addOnCompleteListener {
                 if (it.isSuccessful) {
                     Prefs.clear()

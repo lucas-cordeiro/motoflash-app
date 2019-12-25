@@ -417,7 +417,7 @@ fun Payment.Status.getColor(context: Context) : Int {
         Payment.Status.PAY -> {
             return  R.color.colorGreen
         }
-        Payment.Status.CANCELLED -> {
+        Payment.Status.CANCELED -> {
             return  R.color.colorRed
         }
     }
@@ -431,7 +431,7 @@ fun Payment.Status.toLabel() : String {
         Payment.Status.PAY -> {
             return  "Pago"
         }
-        Payment.Status.CANCELLED -> {
+        Payment.Status.CANCELED -> {
             return  "Cancelado"
         }
     }

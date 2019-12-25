@@ -17,17 +17,18 @@ import br.com.motoflash.core.ui.util.PUSH_MESSAGE
 import br.com.motoflash.core.ui.util.PUSH_TITLE
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 
 class ClientFirebaseMessagingService : FirebaseMessagingService() {
     // [START receive_message]
     override fun onMessageReceived(message: RemoteMessage) {
-        Log.d(TAG, "New Message")
+        Log.d(TAG, "New Message ${Gson().toJson(message)}")
         notifyUser(message.data[PUSH_TITLE], message.data[PUSH_MESSAGE], 1)
     }
 
     fun notifyUser(title: String?, message: String?, pushId: Int) {
 
-        val CHANNEL_ID = "pakman_couriers"// The id of the channel.
+        val CHANNEL_ID = "pakman_clientes"// The id of the channel.
 
         val startIntent = Intent(this, SplashActivity::class.java)
 

@@ -23,10 +23,10 @@ android {
 
 
     defaultConfig {
-        applicationId "com.motoflash.appusuario"
+        applicationId "br.com.motoflash.client"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 17
+        versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

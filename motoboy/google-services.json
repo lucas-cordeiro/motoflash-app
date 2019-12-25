@@ -108,6 +108,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779027327724:android:7e378bd88fa98bfaec53c9",
+        "android_client_info": {
+          "package_name": "com.motoflash.appusuario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779027327724-oubhir5ub1ll5m0kk3qrivgprouqbmev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC0gZg9aiNWFfhTNyPraOhysVNVPtEji4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779027327724-oubhir5ub1ll5m0kk3qrivgprouqbmev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

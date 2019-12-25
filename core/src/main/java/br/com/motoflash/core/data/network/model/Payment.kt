@@ -11,6 +11,6 @@ data class Payment(
     var workOrderId: String? = null
 ){
     enum class Status {
-        PENDING, PAY, CANCELLED
+        PENDING, PAY, CANCELED
     }
 }
